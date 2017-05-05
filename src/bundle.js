@@ -14594,11 +14594,15 @@ var Index = function (_React$Component) {
     _createClass(Index, [{
         key: 'render',
         value: function render() {
+
+            if (/\?user=([\w\W]+)/.exec(window.location.search)) {
+                var user = JSON.parse(decodeURIComponent(/\?user=([\w\W]+)/.exec(window.location.search)[1]));
+                window.localStorage.setItem('user', JSON.stringify(user));
+            }
+
             var userJsonStr = window.localStorage.getItem('user');
-            var body = '';
 
             if (!userJsonStr) {
-                {/*body = <Login/>*/}
                 return _react2.default.createElement(_Login2.default, null);
             }
             //console.log('root');

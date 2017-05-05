@@ -17,11 +17,15 @@ export default class Index extends React.Component{
         super();
     }
     render(){
+
+        if (/\?user=([\w\W]+)/.exec(window.location.search)) {
+            var user = JSON.parse(decodeURIComponent(/\?user=([\w\W]+)/.exec(window.location.search)[1]));
+            window.localStorage.setItem('user', JSON.stringify(user));
+        }
+
         const userJsonStr = window.localStorage.getItem('user');
-        let body = '';
 
         if (!userJsonStr) {
-            {/*body = <Login/>*/}
             return (
                 <Login/>
             )
