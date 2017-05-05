@@ -6,8 +6,10 @@ import BodyEvent from './components/event/BodyEvent';
 import BodyEventDetail from './components/event/detail/BodyEventDetail';
 import CouponDetail from './components/coupon/CouponDetail';
 import CouponRedeem from './components/coupon/CouponRedeem';
-import BodyContact from './components/BodyContact';
-//import { Router,Route } from 'react-router';
+import Login from './components/user/Login';
+
+// import BodyContact from './components/BodyContact';
+import { Router } from 'react-router';
 import { HashRouter,Route, hashHistory } from 'react-router-dom'
 
 export default class Index extends React.Component{
@@ -15,18 +17,28 @@ export default class Index extends React.Component{
         super();
     }
     render(){
+        const userJsonStr = window.localStorage.getItem('user');
+        let body = '';
+
+        if (!userJsonStr) {
+            {/*body = <Login/>*/}
+            return (
+                <Login/>
+            )
+        }
+        //console.log('root');
+
         return (
+
             <HashRouter history={hashHistory}>
                 <div>
                     <Route exact path="/" component={BodyEvent}></Route>
                     <Route exact path="/event/:page" component={BodyEvent}></Route>
                     <Route exact path="/coupon/:page" component={BodyCoupon}></Route>
-                    {/*<Route path="/event/detail/:id" component={BodyEventDetail}></Route>*/}
                     <Route path="/event/detail/:id/:tab" component={BodyEventDetail}></Route>
                     <Route path="/coupon/detail/:id" component={CouponDetail}></Route>
                     <Route exact path="/coupon/redeem/:id" component={CouponRedeem}></Route>
-                    {/*<Route path="/contact:id" component={BodyContact}></Route>*/}
-
+                    <Route exact path="/login" component={Login}></Route>
                 </div>
             </HashRouter>
         )
