@@ -1,0 +1,5 @@
+src/_css/
+src/_images/
+src/js/components/deprecated/
+node_modules/
+.idea/

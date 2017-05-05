@@ -1,0 +1,187 @@
+@import "wap";
+body{
+  background: rgba(244, 244, 244, 1);
+}
+.coupon{
+  height:auto;
+  overflow: hidden;
+  .title{
+    height:auto;
+    overflow: hidden;
+    margin-top: rem(20);
+    .t{
+      height:auto;
+      overflow: hidden;
+      font:rem(22)/rem(30) $f-Regular;
+      text-align: center;
+    }
+    .b{
+      height:auto;
+      overflow: hidden;
+      font:rem(14)/rem(16) $f-Regular;
+      text-align: center;
+      margin-top: rem(15);
+    }
+  }
+  h1{
+    font:rem(18)/rem(28) $f-Regular;
+    color: #000;
+    height:auto;
+    overflow: hidden;
+    text-align: center;
+    margin-top: rem(20);
+  }
+  div.pic{
+    height:auto;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    margin-top: rem(10);
+    img{
+      width:rem(150);
+      height:rem(150);
+      vertical-align: top;
+    }
+  }
+  .des{
+    height:auto;
+    overflow: hidden;
+    font:rem(14)/rem(16) $f-Regular;
+    height:auto;
+    overflow: hidden;
+    color: #000;
+    text-align: center;
+    margin-top: rem(10);
+    span{
+      height:auto;
+      overflow: hidden;
+      display: inline-block;
+      line-height: rem(30);
+      padding: 0 rem(30);
+      border-bottom: 1px solid #cccccc;
+    }
+  }
+  .timer{
+    height:auto;
+    overflow: hidden;
+    text-align: center;
+    font:rem(16)/rem(30) $f-Regular;
+
+    margin-top: rem(20);
+    span{
+      height:auto;
+      overflow: hidden;
+      display: inline-block;
+      padding: 0 rem(30);
+      border-bottom: 1px solid #cccccc;
+    }
+  }
+  .explain{
+    height:auto;
+    overflow: hidden;
+    padding: 0 rem(15);
+    h3{
+      height:auto;
+      overflow: hidden;
+      font:rem(16)/rem(24) $f-Regular;
+      color: #000;
+      font-weight: 400;
+    }
+    p{
+      height:auto;
+      overflow: hidden;
+      font:rem(14)/rem(20) $f-Regular;
+      text-align: justify;
+      color: #000;
+      padding: rem(10) 0;
+    }
+  }
+  div.btn{
+    height:auto;
+    overflow: hidden;
+    margin-top: rem(20);
+    button,a{
+      width:100%;
+      height:rem(40);
+      text-align: center;
+      color: #ffffff;
+      font:rem(16)/rem(40) $f-Regular;
+      background: #fa854b;
+      border-radius: rem(5);
+      text-decoration: none;
+      display: inline-block;
+    }
+  }
+  .from{
+    height:auto;
+    overflow: auto;
+    padding-bottom: rem(30);
+    h3{
+      font:rem(18)/rem(20) $f-Regular;
+      color: #000;
+      height:auto;
+      overflow: hidden;
+      text-indent: rem(20);
+    }
+    div.box{
+      height:auto;
+      overflow: hidden;
+      background: #ffffff;
+      border-top: 1px solid #cccccc;
+      margin-top: rem(10);
+      ul{
+        li{
+          height:rem(42);
+          overflow: hidden;
+          box-sizing: border-box;
+          padding-left: rem(100);
+          position: relative;
+          border-bottom: 1px solid #cccccc;
+          label{
+            width:rem(100);
+            font:rem(14)/rem(42) $f-Regular;
+            color: #000;
+            height: rem(42);
+            overflow: hidden;
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top:0;
+            text-indent: rem(15);
+          }
+          input{
+            width:100%;
+            height: 100%;
+            vertical-align: top;
+            outline: none;
+            border:0;
+            font:rem(14)/rem(32) $f-Regular;
+            color: #000;
+
+          }
+          p{
+            height:100%;
+            font:rem(14)/rem(42) $f-Regular;
+            color: #000;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+  .notice{
+    height:auto;
+    overflow: hidden;
+    text-align: center;
+    font:rem(14)/rem(20) $f-Regular;
+    margin-top: rem(10);
+    input{
+      width: rem(15);
+      height:rem(15);
+      outline: none;
+      vertical-align: top;
+      margin-top: rem(2);
+      margin-right: rem(3);
+    }
+  }
+}

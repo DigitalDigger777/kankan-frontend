@@ -1,0 +1,138 @@
+获取消费者名单
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/consumer
+方法：GET
+
+参数	需要	类型	选项	说明
+方法	是	串	列表
+页	是	整数	1..n
+items_on_page	是	整数	1..n	计数项目在页面上
+响应消费者阵列
+
+{"items": [
+        {
+            "id":2788,
+            "email":"consumer887@test.com",
+            "password":"",
+            "status":1,
+            "role":"ROLE_CONSUMER",
+            "snUnionId":"00000351",
+            "snData":{"name":"John 412"},
+            "dtype":"consumer"
+        }
+    ], "count_pages":100}
+创造新消费者
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/consumer
+方法：POST
+
+参数	需要	类型	选项	说明
+snData	是	数组
+unionId	是	串
+电子邮件	是	串
+密码	是	串
+更新消费者
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/consumer
+方法：PUT
+
+参数	需要	类型	选项	说明
+snData	没有	数组
+密码	没有	串
+状态	没有	整数
+消费者删除
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/consumer
+方法：DELETE
+
+参数	需要	类型	选项	说明
+ID	是	整数
+生的
+ 购物者
+获取购物者列表
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/shopper
+方法：GET
+
+参数	需要	类型	选项	说明
+方法	是	串	列表
+页	是	整数	1..n
+items_on_page	是	整数	1..n	计数项目在页面上
+响应购物者阵列
+
+{
+  "items":[
+    {
+      "id":2888,
+      "email":"shopper357@test.com",
+      "password":"",
+      "status":1,
+      "role":"ROLE_SHOPPER",
+      "name":"Shopper #631",
+      "tel":"+380501555230",
+      "dtype":"shopper"
+    }],"count_pages":20
+}
+创建新的购物者
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/shopper
+方法：POST
+
+参数	需要	类型	选项	说明
+名称	是	串
+电话	是	串
+电子邮件	是	串
+密码	是	串
+更新购物者
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/shopper
+方法：PUT
+
+参数	需要	类型	选项	说明
+名称	没有	串
+电话	没有	串
+密码	没有	串
+状态	没有	整数
+购物者删除
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/shopper
+方法：DELETE
+
+参数	需要	类型	选项	说明
+ID	是	整数
+生的
+ 赞助商
+获得赞助商名单
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/sponsor
+方法：GET
+
+参数	需要	类型	选项	说明
+方法	是	串	列表
+页	是	整数	1..n
+items_on_page	是	整数	1..n	计数项目在页面上
+响应赞助商阵列
+
+创建新的赞助商
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/sponsor
+方法：POST
+
+参数	需要	类型	选项	说明
+名称	是	串
+电子邮件	是	串
+更新赞助商
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/sponsor
+方法：PUT
+
+参数	需要	类型	选项	说明
+名称	没有	串
+状态	没有	整数
+赞助者删除
+
+位置：http : //kuaikan.ppcgclub.com/api/kankan/sponsor
+方法：DELETE
+
+参数	需要	类型	选项	说明
+ID	是	整数
