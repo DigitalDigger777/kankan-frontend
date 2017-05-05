@@ -30605,7 +30605,7 @@ var BodyEvent = function (_React$Component) {
                     { className: 'btn' },
                     _react2.default.createElement(
                         'a',
-                        { href: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfca7a5406897fa7b&redirect_uri=http://kuaikan.ppcgclub.com/open-wechat/get-access-token&response_type=code&scope=snsapi_login&state=0#wechat_redirect', className: 'item ui-link' },
+                        { href: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfca7a5406897fa7b&redirect_uri=http://kuaikan.ppcgclub.com/kankan/consumer/login&response_type=code&scope=snsapi_login&state=0#wechat_redirect', className: 'item ui-link' },
                         'Login with wechat'
                     )
                 )
