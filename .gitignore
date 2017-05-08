@@ -3,3 +3,4 @@ src/_images/
 src/js/components/deprecated/
 node_modules/
 .idea/
+src/js/components/Config.js
