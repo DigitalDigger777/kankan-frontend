@@ -3,6 +3,15 @@
  */
 import React from 'react';
 export default class RecordPrice extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state = {
+            bets: props.bets
+        }
+
+    }
+
     render(){
         return (
             <div className="cBox">
@@ -16,30 +25,21 @@ export default class RecordPrice extends React.Component{
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <img src="images/u482.png" alt="" />
-                                        <p>Wechat Nickname</p>
-                                </td>
-                                <td>
-                                    <p>$1.79</p>
-                                </td>
-                                <td>
-                                    <p>$2.10</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <img src="images/u360.png" alt="" />
-                                        <p>Sponsor Name</p>
-                                </td>
-                                <td>
-                                    <p>$21.00</p>
-                                </td>
-                                <td>
-                                    <p>$23.10</p>
-                                </td>
-                            </tr>
+                        { this.state.bets.map((bet, index)=>
+                                <tr key={index}>
+                                    <td>
+                                        <img src="images/u482.png" alt="" />
+                                        <p>{ bet.consumer ? bet.consumer.snData.nickname : bet.sponsor.name}</p>
+                                    </td>
+                                    <td>
+                                        <p>${bet.betValue}</p>
+                                    </td>
+                                    <td>
+                                        <p>${bet.currentPrice}</p>
+                                    </td>
+                                </tr>
+
+                        )}
                         </tbody>
                     </table>
                 </div>

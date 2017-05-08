@@ -141,6 +141,21 @@ button {
   color: #ffffff;
   background: #fa854b;
 }
+
+.get-coupon-button {
+  width: 16rem;
+  height: 2.4rem;
+  background: #fa854b;
+  color: #ffffff;
+  font: 0.85333rem/2.4rem -apple-system-font, "Helvetica Neue", sans-serif;
+  text-align: center;
+  display: inline-block;
+  border-radius: 0.42667rem;
+  margin-top: -1.17333rem;
+  border: 0;
+  text-decoration: none;
+}
+
 .col-20,
 .col-50,
 .col-80 {
@@ -184,4 +199,8 @@ button {
   text-decoration: none;
   color: #3e3e3e;
   line-height: 2.5;
+}
+
+.bargain .banner {
+  text-align: center;
 }

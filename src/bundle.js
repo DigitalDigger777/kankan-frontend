@@ -8090,12 +8090,18 @@ var Config = function () {
         _classCallCheck(this, Config);
 
         this._baseUrl = 'http://dev.kankan/app_dev.php/';
+        this._baseImagesPath = 'http://dev.kankan/';
     }
 
     _createClass(Config, [{
         key: 'baseUrl',
         get: function get() {
             return this._baseUrl;
+        }
+    }, {
+        key: 'baseImagePath',
+        get: function get() {
+            return this._baseImagesPath;
         }
     }]);
 
@@ -13088,7 +13094,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // import PageTitle from '../parts/PageTitle';
 
-// import indexCss from '../../../css/index.css';
 
 var BodyEvent = function (_React$Component) {
     _inherits(BodyEvent, _React$Component);
@@ -13099,73 +13104,53 @@ var BodyEvent = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (BodyEvent.__proto__ || Object.getPrototypeOf(BodyEvent)).call(this, props));
 
         var page = props.match.params.page !== undefined ? props.match.params.page : 1;
-        console.log(page);
+
         _this.state = {
-            items: [],
             page: page
         };
         return _this;
     }
 
     _createClass(BodyEvent, [{
-        key: 'componentDidMount',
-        value: function componentDidMount(props) {
-            //console.log('test', props);
-        }
-    }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(props) {
 
             this.state = {
-                items: [],
                 page: props.match.params.page !== undefined ? props.match.params.page : 1
             };
         }
     }, {
         key: 'render',
         value: function render() {
-            return (
-                // <div>
-                //     <PageTitle/>
-                //     <div className="main">
-                //         <Search/>
-                //         <EventList page={this.state.page} />
-                //         <Pagination page={this.state.page} type="event"/>
-                //         <div className="column">
-                //             <Link to="/">商品列表</Link>
-                //             <Link to="/coupon/1">劵列表</Link>
-                //         </div>
-                //     </div>
-                // </div>
+
+            return _react2.default.createElement(
+                'div',
+                null,
                 _react2.default.createElement(
                     'div',
                     null,
                     _react2.default.createElement(
                         'div',
-                        null,
+                        { className: 'main' },
+                        _react2.default.createElement(_Search2.default, null),
                         _react2.default.createElement(
                             'div',
-                            { className: 'main' },
-                            _react2.default.createElement(_Search2.default, null),
+                            { className: 'list' },
+                            _react2.default.createElement(_EventList2.default, { page: this.state.page })
+                        ),
+                        _react2.default.createElement(_Pagination2.default, { page: this.state.page, type: 'event' }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'column' },
                             _react2.default.createElement(
-                                'div',
-                                { className: 'list' },
-                                _react2.default.createElement(_EventList2.default, { page: this.state.page })
+                                _reactRouterDom.Link,
+                                { to: '/' },
+                                'Event List'
                             ),
-                            _react2.default.createElement(_Pagination2.default, { page: this.state.page, type: 'event' }),
                             _react2.default.createElement(
-                                'div',
-                                { className: 'column' },
-                                _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/' },
-                                    'Event List'
-                                ),
-                                _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/coupon/1' },
-                                    'Coupon List'
-                                )
+                                _reactRouterDom.Link,
+                                { to: '/coupon/1' },
+                                'Coupon List'
                             )
                         )
                     )
@@ -14057,6 +14042,10 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _reactRouterDom = __webpack_require__(17);
 
+var _CouponStatus = __webpack_require__(295);
+
+var _CouponStatus2 = _interopRequireDefault(_CouponStatus);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14089,12 +14078,14 @@ var CouponList = function (_React$Component) {
             var _this2 = this;
 
             var config = new _Config2.default();
-            console.log(this.props);
+            var consumerId = window.localStorage.getItem('user_id');
+
             _axios2.default.get(config.baseUrl + 'api/kankan/coupon', {
                 params: {
                     method: 'LIST',
                     page: this.props.page,
-                    items_on_page: 5
+                    items_on_page: 5,
+                    consumerId: consumerId
                 }
             }).then(function (res) {
 
@@ -14110,12 +14101,14 @@ var CouponList = function (_React$Component) {
             var _this3 = this;
 
             var config = new _Config2.default();
-            console.log(this.props);
+            var consumerId = window.localStorage.getItem('user_id');
+
             _axios2.default.get(config.baseUrl + 'api/kankan/coupon', {
                 params: {
                     method: 'LIST',
                     page: this.props.page,
-                    items_on_page: 5
+                    items_on_page: 5,
+                    consumerId: consumerId
                 }
             }).then(function (res) {
 
@@ -14128,119 +14121,63 @@ var CouponList = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var config = new _Config2.default();
             var pages = [];
 
             for (var i = 0; i < this.state.count_pages; i++) {
                 pages.push('<li><a href="#">' + i + '</a></li>');
             }
 
-            return (
-                // <div>
-                //     <h4>Coupons</h4>
-                //     <table className="table table-striped">
-                //         <thead>
-                //         <tr>
-                //             <th>Name</th>
-                //         </tr>
-                //         </thead>
-                //         <tbody>
-                //         {this.state.items.map(coupon =>
-                //             <tr key={coupon.id}>
-                //                 <td><Link to={'/coupon/' + coupon.id}>{coupon.name}</Link></td>
-                //             </tr>
-                //         )}
-                //         </tbody>
-                //     </table>
-                //     <nav>
-                //         <ul className="pagination">
-                //             {pages}
-                //         </ul>
-                //     </nav>
-                // </div>
-
-
-                // <ul>
-                //     { this.state.items.map((item, index) =>
-                //
-                //         <li key={index}>
-                //             <div className="shopping">
-                //                 <img src={item.coupon.image == ''? '' : item.coupon.image} className="sh" />
-                //                 <div className="shop-ri">
-                //                     <div className="rule">
-                //                         <img src="images/u68.png" alt="" />
-                //                         <p>{item.coupon.product.name}</p>
-                //                     </div>
-                //                     <h3>{item.coupon.name}</h3>
-                //                     <p>Final Buy Price: ${item.coupon.couponPrice}</p>
-                //                     <p className="mt15">Expired: {item.expireTimeFormat}</p>
-                //                 </div>
-                //             </div>
-                //             <div className="items">
-                //                 {/*<div className="item">*/}
-                //                     {/*<p>总共</p>*/}
-                //                     {/*<p>{coupon.total}件</p>*/}
-                //                 {/*</div>*/}
-                //                 {/*<div className="item">*/}
-                //                     {/*<p>还剩</p>*/}
-                //                     {/*<p>{coupon.left}件</p>*/}
-                //                 {/*</div>*/}
-                //                 <Link className="item" to={`/coupon/detail/${item.coupon.id}`}>Detail</Link>
-                //             </div>
-                //         </li>
-                //
-                //     )}
-                // </ul>
-
-                _react2.default.createElement(
-                    'ul',
-                    null,
-                    this.state.items.map(function (item, index) {
-                        return _react2.default.createElement(
-                            'li',
-                            { key: index },
+            return _react2.default.createElement(
+                'ul',
+                null,
+                this.state.items.map(function (item, index) {
+                    return _react2.default.createElement(
+                        'li',
+                        { key: index },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'shopping' },
+                            _react2.default.createElement('img', { className: 'sh', src: item.coupon.product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + item.coupon.product.images[0] : '' }),
                             _react2.default.createElement(
-                                'div',
-                                { className: 'shopping' },
-                                _react2.default.createElement('img', { className: 'sh', src: item.coupon.image == '' ? '' : item.coupon.image }),
+                                'span',
+                                { className: 'detail' },
                                 _react2.default.createElement(
-                                    'span',
-                                    { className: 'detail' },
+                                    _reactRouterDom.Link,
+                                    { className: 'item', to: '/coupon/detail/' + item.coupon.id },
+                                    'Detail',
                                     _react2.default.createElement(
-                                        _reactRouterDom.Link,
-                                        { className: 'item', to: '/coupon/detail/' + item.coupon.id },
-                                        'Detail',
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'arrow' },
-                                            '>'
-                                        )
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'shop-ri' },
-                                    _react2.default.createElement(
-                                        'h3',
-                                        null,
-                                        item.coupon.product.name
-                                    ),
-                                    _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        'Final Buy Price: $',
-                                        item.coupon.couponPrice
-                                    ),
-                                    _react2.default.createElement(
-                                        'p',
-                                        { className: 'mt15' },
-                                        'Expired: ',
-                                        item.expireTimeFormat
+                                        'span',
+                                        { className: 'arrow' },
+                                        '>'
                                     )
                                 )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'shop-ri' },
+                                _react2.default.createElement(
+                                    'h3',
+                                    null,
+                                    item.coupon.product.name
+                                ),
+                                _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'Final Buy Price: $',
+                                    item.coupon.couponPrice
+                                ),
+                                _react2.default.createElement(
+                                    'p',
+                                    { className: 'mt15' },
+                                    'Expired: ',
+                                    item.expireTimeFormat
+                                )
                             )
-                        );
-                    })
-                )
+                        ),
+                        _react2.default.createElement(_CouponStatus2.default, { status: item.coupon.winCoupons[0].redeemStatus })
+                    );
+                })
             );
         }
     }]);
@@ -14309,7 +14246,6 @@ var CouponList = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            console.log('ssss1');
             var config = new _Config2.default();
 
             _axios2.default.get(config.baseUrl + 'api/kankan/shopper/event', {
@@ -14350,67 +14286,15 @@ var CouponList = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var config = new _Config2.default();
             var pages = [];
 
             for (var i = 0; i < this.state.count_pages; i++) {
                 pages.push('<li><a href="#">' + i + '</a></li>');
             }
 
-            return (
-                // <div>
-                //     <h4>Coupons</h4>
-                //     <table className="table table-striped">
-                //         <thead>
-                //         <tr>
-                //             <th>Name</th>
-                //         </tr>
-                //         </thead>
-                //         <tbody>
-                //         {this.state.items.map(coupon =>
-                //             <tr key={coupon.id}>
-                //                 <td><Link to={'/coupon/' + coupon.id}>{coupon.name}</Link></td>
-                //             </tr>
-                //         )}
-                //         </tbody>
-                //     </table>
-                //     <nav>
-                //         <ul className="pagination">
-                //             {pages}
-                //         </ul>
-                //     </nav>
-                // </div>
-                // <ul>
-                //     { this.state.items.map((item, index) =>
-                //
-                //         <li key={index}>
-                //             <div className="shopping">
-                //                 <img src={item.event.image == ''? '' : item.event.image} className="sh" />
-                //                 <div className="shop-ri">
-                //                     <div className="rule">
-                //                         <img src="images/u68.png" alt="" />
-                //                         <p>{item.event.coupon.product.name}</p>
-                //                     </div>
-                //                     <h3>{item.event.name}</h3>
-                //                     <p>Lower price: ${item.lowerPrice}</p>
-                //                     <p>Original price: ${item.event.coupon.product.price}</p>
-                //                 </div>
-                //             </div>
-                //             <div className="items">
-                //                 <div className="item">
-                //                     <p>Total</p>
-                //                     <p>{item.event.coupon.totalQuantity }</p>
-                //                 </div>
-                //                 <div className="item">
-                //                     <p>Avialable</p>
-                //                     <p>{item.event.coupon.availableQuantity }</p>
-                //                 </div>
-                //                 <Link className="item" to={`/event/detail/${item.event.id}`}>参加</Link>
-                //             </div>
-                //         </li>
-                //
-                //     )}
-                // </ul>
-                _react2.default.createElement(
+            if (this.state.items.length > 0) {
+                return _react2.default.createElement(
                     'ul',
                     null,
                     this.state.items.map(function (item, index) {
@@ -14420,7 +14304,7 @@ var CouponList = function (_React$Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'shopping' },
-                                _react2.default.createElement('img', { src: item.event.image == '' ? '' : item.event.image, className: 'sh' }),
+                                _react2.default.createElement('img', { src: item.event.product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + item.event.product.images[0] : '', className: 'sh' }),
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'shop-ri' },
@@ -14437,7 +14321,7 @@ var CouponList = function (_React$Component) {
                                     _react2.default.createElement(
                                         'h3',
                                         null,
-                                        item.event.coupon.product.name
+                                        item.event.product.name
                                     ),
                                     _react2.default.createElement(
                                         'p',
@@ -14449,7 +14333,7 @@ var CouponList = function (_React$Component) {
                                         'p',
                                         { className: 'mt15' },
                                         'Original Price: $',
-                                        item.event.coupon.product.price
+                                        item.event.product.price
                                     )
                                 )
                             ),
@@ -14498,15 +14382,21 @@ var CouponList = function (_React$Component) {
                                         _react2.default.createElement(
                                             _reactRouterDom.Link,
                                             { className: 'lh2', to: '/event/detail/' + item.event.id + '/event_detail' },
-                                            ' > '
+                                            '> '
                                         )
                                     )
                                 )
                             )
                         );
                     })
-                )
-            );
+                );
+            } else {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    'Loading...'
+                );
+            }
         }
     }]);
 
@@ -14534,6 +14424,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Config = __webpack_require__(72);
+
+var _Config2 = _interopRequireDefault(_Config);
 
 var _react = __webpack_require__(3);
 
@@ -14571,6 +14465,10 @@ var _reactRouter = __webpack_require__(11);
 
 var _reactRouterDom = __webpack_require__(17);
 
+var _axios = __webpack_require__(66);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14598,6 +14496,17 @@ var Index = function (_React$Component) {
             if (/\?user=([\w\W]+)/.exec(window.location.search)) {
                 var user = JSON.parse(decodeURIComponent(/\?user=([\w\W]+)/.exec(window.location.search)[1]));
                 window.localStorage.setItem('user', JSON.stringify(user));
+
+                var config = new _Config2.default();
+                _axios2.default.post(config.baseUrl + 'api/kankan/consumer', {
+                    snData: user,
+                    snUnionId: user.unionid,
+                    status: 1
+                }).then(function (res) {
+
+                    window.localStorage.setItem('user_id', res.data.id);
+                    window.location = '/';
+                });
             }
 
             var userJsonStr = window.localStorage.getItem('user');
@@ -29410,6 +29319,10 @@ var _RecordPrice = __webpack_require__(289);
 
 var _RecordPrice2 = _interopRequireDefault(_RecordPrice);
 
+var _JoinPanel = __webpack_require__(294);
+
+var _JoinPanel2 = _interopRequireDefault(_JoinPanel);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29420,14 +29333,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Created by korman on 02.05.17.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
-// import ProductImage from './ProductImage';
-// import ProductPrice from './ProductPrice';
-// import CurrentPrice from './CurrentPrice';
-// import LowerPriceTabs from './LowerPriceTabs';
-// import EventBargain from './EventBargain';
-
-// import BargainCss from '../../../../css/bargain.css';
-
 var BodyEventDetail = function (_React$Component) {
     _inherits(BodyEventDetail, _React$Component);
 
@@ -29437,11 +29342,14 @@ var BodyEventDetail = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (BodyEventDetail.__proto__ || Object.getPrototypeOf(BodyEventDetail)).call(this, props));
 
         console.log(props.match.params.tab);
+
         _this.state = {
             id: props.match.params.id,
             tab: props.match.params.tab,
-            data: {}
+            data: null
         };
+
+        _this.lowerConsumer = _this.lowerConsumer.bind(_this);
         return _this;
     }
 
@@ -29451,60 +29359,77 @@ var BodyEventDetail = function (_React$Component) {
             var _this2 = this;
 
             var config = new _Config2.default();
-            //
+            var consumerId = window.localStorage.getItem('user_id');
+
             _axios2.default.get(config.baseUrl + 'api/kankan/shopper/event/' + this.state.id).then(function (res) {
-                // console.log(res.data);
+                console.log(res.data);
                 var data = res.data;
                 // const countPages = res.data.count_pages;
                 _this2.setState({ data: data });
+            });
+
+            _axios2.default.get(config.baseUrl + 'api/kankan/shopper/event/is-joined?eventId=' + this.state.id + '&consumerId=' + consumerId).then(function (res) {
+                console.log(res.data);
+                _this2.setState({
+                    isJoined: res.data.is_joined
+                });
             });
         }
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(props) {
-            console.log(props.match.params.tab);
+
             this.state = {
                 id: props.match.params.id,
                 tab: props.match.params.tab,
-                data: {}
+                data: this.state.data
             };
+        }
+    }, {
+        key: 'lowerConsumer',
+        value: function lowerConsumer() {
+            var config = new _Config2.default();
+            var consumerId = window.localStorage.getItem('user_id');
+
+            _axios2.default.post(config.baseUrl + 'api/kankan/consumer/bet', {
+                eventId: this.state.id,
+                consumerId: consumerId
+            }).then(function (res) {
+                console.log(res);
+            });
         }
     }, {
         key: 'render',
         value: function render() {
+            var config = new _Config2.default();
 
-            var tab = _react2.default.createElement(_EventDetail2.default, null);
+            if (this.state.data) {
+                var tab = _react2.default.createElement(_EventDetail2.default, { description: this.state.data.description });
 
-            if (this.state.tab == 'event_detail') {
-                tab = _react2.default.createElement(_EventDetail2.default, null);
-            }
+                if (this.state.tab == 'event_detail') {
+                    tab = _react2.default.createElement(_EventDetail2.default, { description: this.state.data.description });
+                }
 
-            if (this.state.tab == 'lower_price') {
-                tab = _react2.default.createElement(_LowerPrice2.default, null);
-            }
+                if (this.state.tab == 'lower_price') {
+                    tab = _react2.default.createElement(_LowerPrice2.default, { sponsors: this.state.data.sponsors, id: this.state.id });
+                }
 
-            if (this.state.tab == 'record_price') {
-                tab = _react2.default.createElement(_RecordPrice2.default, null);
-            }
+                if (this.state.tab == 'record_price') {
+                    tab = _react2.default.createElement(_RecordPrice2.default, { bets: this.state.data.bets });
+                }
 
-            return (
-                // <div className="bargain">
-                //     <ProductImage/>
-                //     <ProductPrice/>
-                //     <CurrentPrice/>
-                //     <LowerPriceTabs/>
-                //     {/*<EventBargain/>*/}
-                // </div>
-                _react2.default.createElement(
+                var user = JSON.parse(window.localStorage.getItem('user'));
+
+                return _react2.default.createElement(
                     'div',
-                    { 'data-reactroot': '' },
+                    null,
                     _react2.default.createElement(
                         'div',
                         { className: 'bargain' },
                         _react2.default.createElement(
                             'div',
                             { className: 'banner' },
-                            _react2.default.createElement('img', { alt: '', src: 'images/u282.jpg' }),
+                            _react2.default.createElement('img', { src: this.state.data.product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + this.state.data.product.images[0] : '' }),
                             _react2.default.createElement(
                                 'p',
                                 null,
@@ -29517,7 +29442,7 @@ var BodyEventDetail = function (_React$Component) {
                             _react2.default.createElement(
                                 'h3',
                                 { className: 'title' },
-                                'Canada Goose Big water'
+                                this.state.data.product.name
                             ),
                             _react2.default.createElement(
                                 'div',
@@ -29531,7 +29456,8 @@ var BodyEventDetail = function (_React$Component) {
                                         _react2.default.createElement(
                                             'span',
                                             null,
-                                            'Original Price\uFF1A$74,99'
+                                            'Original Price\uFF1A$',
+                                            this.state.data.product.price
                                         ),
                                         _react2.default.createElement(
                                             'span',
@@ -29545,12 +29471,14 @@ var BodyEventDetail = function (_React$Component) {
                                         _react2.default.createElement(
                                             'span',
                                             null,
-                                            'Total Quantity\uFF1A20'
+                                            'Total Quantity\uFF1A',
+                                            this.state.data.coupon.totalQuantity
                                         ),
                                         _react2.default.createElement(
                                             'span',
                                             null,
-                                            'Available Quantity\uFF1A10'
+                                            'Available Quantity\uFF1A',
+                                            this.state.data.coupon.availableQuantity
                                         )
                                     )
                                 )
@@ -29565,8 +29493,8 @@ var BodyEventDetail = function (_React$Component) {
                                 _react2.default.createElement(
                                     'h3',
                                     { className: 'top' },
-                                    _react2.default.createElement('img', { alt: '', src: 'images/u308.png' }),
-                                    'Wechat Nickname'
+                                    _react2.default.createElement('img', { alt: '', src: user.headimgurl }),
+                                    user.nickname
                                 ),
                                 _react2.default.createElement(
                                     'p',
@@ -29575,7 +29503,8 @@ var BodyEventDetail = function (_React$Component) {
                                     _react2.default.createElement(
                                         'span',
                                         null,
-                                        '$61.00'
+                                        '$',
+                                        this.state.data.bets[this.state.data.bets.length - 1].currentPrice
                                     )
                                 ),
                                 _react2.default.createElement(
@@ -29624,59 +29553,35 @@ var BodyEventDetail = function (_React$Component) {
                                 ),
                                 tab
                             )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'footer clearfix' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'col-50' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-50 footer-col' },
-                                _react2.default.createElement(
-                                    'p',
-                                    null,
-                                    'Origial:'
-                                ),
-                                _react2.default.createElement(
-                                    'p',
-                                    null,
-                                    '$74.93'
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'col-50 footer-col' },
-                                _react2.default.createElement(
-                                    'p',
-                                    null,
-                                    'Lowest:'
-                                ),
-                                _react2.default.createElement(
-                                    'p',
-                                    { className: 'orange' },
-                                    '$0.00'
-                                )
-                            )
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-50 text-right' },
+                            { className: 'bargainEvent' },
                             _react2.default.createElement(
-                                'a',
-                                { href: 'kankan_home-joined-lower_the_price__e.html' },
+                                'h3',
+                                null,
+                                'Lower the Price'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                null,
                                 _react2.default.createElement(
                                     'button',
-                                    { className: 'main-btn' },
-                                    'Join'
+                                    { type: 'button', onClick: this.lowerConsumer },
+                                    'Lower'
                                 )
                             )
                         )
-                    )
-                )
-            );
+                    ),
+                    _react2.default.createElement(_JoinPanel2.default, { eventId: this.state.id, product: this.state.data.product, isJoined: this.state.isJoined })
+                );
+            } else {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    'Loading...'
+                );
+            }
         }
     }]);
 
@@ -29720,10 +29625,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var EventDetail = function (_React$Component) {
     _inherits(EventDetail, _React$Component);
 
-    function EventDetail() {
+    function EventDetail(props) {
         _classCallCheck(this, EventDetail);
 
-        return _possibleConstructorReturn(this, (EventDetail.__proto__ || Object.getPrototypeOf(EventDetail)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (EventDetail.__proto__ || Object.getPrototypeOf(EventDetail)).call(this, props));
+
+        _this.state = {
+            description: props.description
+        };
+        return _this;
     }
 
     _createClass(EventDetail, [{
@@ -29735,7 +29645,7 @@ var EventDetail = function (_React$Component) {
                 _react2.default.createElement(
                     "p",
                     null,
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget."
+                    this.state.description
                 )
             );
         }
@@ -29828,9 +29738,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _Config = __webpack_require__(72);
+
+var _Config2 = _interopRequireDefault(_Config);
+
 var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(66);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _LowerSponsorButton = __webpack_require__(297);
+
+var _LowerSponsorButton2 = _interopRequireDefault(_LowerSponsorButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29842,131 +29764,127 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Created by zhangbin on 2017/4/5.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
-
 var LowerPrice = function (_React$Component) {
     _inherits(LowerPrice, _React$Component);
 
-    function LowerPrice() {
+    function LowerPrice(props) {
         _classCallCheck(this, LowerPrice);
 
-        return _possibleConstructorReturn(this, (LowerPrice.__proto__ || Object.getPrototypeOf(LowerPrice)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (LowerPrice.__proto__ || Object.getPrototypeOf(LowerPrice)).call(this, props));
+
+        _this.state = {
+            id: props.id,
+            sponsors: null
+        };
+
+        _this.lowerSponsor = _this.lowerSponsor.bind(_this);
+        return _this;
     }
 
     _createClass(LowerPrice, [{
-        key: "render",
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var config = new _Config2.default();
+            var eventId = this.state.id;
+
+            _axios2.default.get(config.baseUrl + 'api/kankan/shopper/event/sponsors?eventId=' + eventId).then(function (res) {
+                console.log(res.data);
+                var data = res.data;
+                // const countPages = res.data.count_pages;
+                _this2.setState({ sponsors: data });
+            });
+        }
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(props) {
+
+            this.state = {
+                id: props.match.params.id,
+                tab: props.match.params.tab,
+                data: this.state.data
+            };
+        }
+    }, {
+        key: 'lowerSponsor',
+        value: function lowerSponsor(e, sponsorId) {
+
+            var config = new _Config2.default();
+
+            _axios2.default.post(config.baseUrl + 'api/kankan/consumer/bet', {
+                eventId: this.state.id,
+                sponsorId: sponsorId
+            }).then(function (res) {
+                console.log(res);
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
-            return _react2.default.createElement(
-                "div",
-                { className: "cBox" },
-                _react2.default.createElement(
-                    "h3",
-                    null,
-                    "Sponsor Helps you:"
-                ),
-                _react2.default.createElement(
-                    "dl",
-                    { className: "sponsorList" },
+            var _this3 = this;
+
+            var config = new _Config2.default();
+
+            if (this.state.sponsors) {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'cBox' },
                     _react2.default.createElement(
-                        "dt",
+                        'h3',
                         null,
-                        "Gold sponsor"
+                        'Sponsor Helps you:'
                     ),
                     _react2.default.createElement(
-                        "dd",
-                        null,
-                        _react2.default.createElement(
-                            "span",
-                            null,
-                            _react2.default.createElement("img", { src: "images/u360.png", alt: "" }),
-                            _react2.default.createElement(
-                                "p",
-                                null,
-                                "ABC Accounting"
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            null,
-                            "ABC Accounting has more than 30 years histroy. 6046789893"
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "btn" },
-                            _react2.default.createElement(
-                                "button",
-                                null,
-                                "Lower"
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        "dt",
-                        null,
-                        "Gold sponsor"
-                    ),
-                    _react2.default.createElement(
-                        "dd",
-                        null,
-                        _react2.default.createElement(
-                            "span",
-                            null,
-                            _react2.default.createElement("img", { src: "images/u360.png", alt: "" }),
-                            _react2.default.createElement(
-                                "p",
-                                null,
-                                "ABC Accounting"
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            null,
-                            "ABC Accounting has more than 30 years histroy. 6046789893"
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "btn" },
-                            _react2.default.createElement(
-                                "button",
-                                null,
-                                "Lower"
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        "dt",
-                        null,
-                        "Real estate broker sponsor"
-                    ),
-                    _react2.default.createElement(
-                        "dd",
-                        null,
-                        _react2.default.createElement(
-                            "span",
-                            null,
-                            _react2.default.createElement("img", { src: "images/u400.png", alt: "" }),
-                            _react2.default.createElement(
-                                "p",
-                                null,
-                                "Miki real estate"
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            null,
-                            "The creation of 30 years of Dong Hongjia accounting firm, has superb technology, impeccable experience, 6046789893"
-                        ),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "btn" },
-                            _react2.default.createElement(
-                                "button",
-                                null,
-                                "Lower"
-                            )
-                        )
+                        'dl',
+                        { className: 'sponsorList' },
+                        this.state.sponsors.map(function (sponsor, index) {
+                            return _react2.default.createElement(
+                                'div',
+                                { key: index },
+                                _react2.default.createElement(
+                                    'dt',
+                                    null,
+                                    sponsor.level,
+                                    ' sponsor'
+                                ),
+                                _react2.default.createElement(
+                                    'dd',
+                                    null,
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        _react2.default.createElement('img', {
+                                            src: sponsor.logo != '' ? config.baseImagePath + 'uploads/logos/' + sponsor.logo : '',
+                                            alt: '' }),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            sponsor.name
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        null,
+                                        sponsor.description
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'btn' },
+                                        _react2.default.createElement(_LowerSponsorButton2.default, { id: _this3.state.id, sponsorId: sponsor.id, bets: sponsor.bets })
+                                    )
+                                )
+                            );
+                        })
                     )
-                )
-            );
+                );
+            } else {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    'Loading...'
+                );
+            }
         }
     }]);
 
@@ -30006,10 +29924,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var RecordPrice = function (_React$Component) {
     _inherits(RecordPrice, _React$Component);
 
-    function RecordPrice() {
+    function RecordPrice(props) {
         _classCallCheck(this, RecordPrice);
 
-        return _possibleConstructorReturn(this, (RecordPrice.__proto__ || Object.getPrototypeOf(RecordPrice)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (RecordPrice.__proto__ || Object.getPrototypeOf(RecordPrice)).call(this, props));
+
+        _this.state = {
+            bets: props.bets
+        };
+
+        return _this;
     }
 
     _createClass(RecordPrice, [{
@@ -30050,70 +29974,42 @@ var RecordPrice = function (_React$Component) {
                         _react2.default.createElement(
                             "tbody",
                             null,
-                            _react2.default.createElement(
-                                "tr",
-                                null,
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
-                                    _react2.default.createElement("img", { src: "images/u482.png", alt: "" }),
+                            this.state.bets.map(function (bet, index) {
+                                return _react2.default.createElement(
+                                    "tr",
+                                    { key: index },
                                     _react2.default.createElement(
-                                        "p",
+                                        "td",
                                         null,
-                                        "Wechat Nickname"
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
+                                        _react2.default.createElement("img", { src: "images/u482.png", alt: "" }),
+                                        _react2.default.createElement(
+                                            "p",
+                                            null,
+                                            bet.consumer ? bet.consumer.snData.nickname : bet.sponsor.name
+                                        )
+                                    ),
                                     _react2.default.createElement(
-                                        "p",
+                                        "td",
                                         null,
-                                        "$1.79"
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
+                                        _react2.default.createElement(
+                                            "p",
+                                            null,
+                                            "$",
+                                            bet.betValue
+                                        )
+                                    ),
                                     _react2.default.createElement(
-                                        "p",
+                                        "td",
                                         null,
-                                        "$2.10"
+                                        _react2.default.createElement(
+                                            "p",
+                                            null,
+                                            "$",
+                                            bet.currentPrice
+                                        )
                                     )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                "tr",
-                                null,
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
-                                    _react2.default.createElement("img", { src: "images/u360.png", alt: "" }),
-                                    _react2.default.createElement(
-                                        "p",
-                                        null,
-                                        "Sponsor Name"
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
-                                    _react2.default.createElement(
-                                        "p",
-                                        null,
-                                        "$21.00"
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
-                                    _react2.default.createElement(
-                                        "p",
-                                        null,
-                                        "$23.10"
-                                    )
-                                )
-                            )
+                                );
+                            })
                         )
                     )
                 )
@@ -30153,6 +30049,10 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _reactRouterDom = __webpack_require__(17);
 
+var _RedeemPopup = __webpack_require__(296);
+
+var _RedeemPopup2 = _interopRequireDefault(_RedeemPopup);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30173,8 +30073,10 @@ var CouponDetail = function (_React$Component) {
 
         _this.state = {
             id: props.match.params.id,
-            data: {}
+            data: null
         };
+
+        _this.showRedeemPopup = _this.showRedeemPopup.bind(_this);
         return _this;
     }
 
@@ -30193,104 +30095,114 @@ var CouponDetail = function (_React$Component) {
             });
         }
     }, {
+        key: 'showRedeemPopup',
+        value: function showRedeemPopup() {
+            //$('#redeemPopup').fadeIn();
+            var config = new _Config2.default();
+            var consumerId = window.localStorage.getItem('user_id');
+            var couponId = this.state.id;
+
+            _axios2.default.post(config.baseUrl + 'api/kankan/coupon/redeem', {
+                consumerId: consumerId,
+                couponId: couponId
+            }).then(function (res) {
+                alert('Redeem');
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
 
-            // const props = [];
-            // for (let prop in this.state.data) {
-            //     if (prop == 'startTime' || prop == 'expireTime') {
-            //         let date = new Date(this.state.data[prop].date);
-            //         props.push(
-            //             <tr key={prop}>
-            //                 <td>{date.toLocaleString()}</td>
-            //             </tr>
-            //         );
-            //     } else {
-            //         props.push(
-            //             <tr key={prop}>
-            //                 <td>{prop} : {this.state.data[prop]}</td>
-            //             </tr>
-            //         );
-            //     }
-            // }
             console.log(this.state);
-            return _react2.default.createElement(
-                'div',
-                { 'data-reactroot': '' },
-                _react2.default.createElement(
+            var config = new _Config2.default();
+
+            if (this.state.data) {
+                return _react2.default.createElement(
                     'div',
-                    { className: 'coupon' },
+                    { 'data-reactroot': '' },
+                    _react2.default.createElement(_RedeemPopup2.default, null),
                     _react2.default.createElement(
                         'div',
-                        null,
+                        { className: 'coupon' },
                         _react2.default.createElement(
-                            'h1',
+                            'div',
                             null,
-                            'Canada Goose Big water'
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'pic' },
-                            _react2.default.createElement('img', { alt: '', src: 'images/u282.jpg' }),
                             _react2.default.createElement(
-                                'div',
-                                { className: 'msg-wrap' },
-                                _react2.default.createElement(
-                                    'span',
-                                    { className: 'msg' },
-                                    'Void'
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'des' },
-                            '82981727263553'
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'timer' },
-                            _react2.default.createElement(
-                                'span',
+                                'h1',
                                 null,
-                                'Expired: 2017/03/31'
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'explain' },
-                            _react2.default.createElement(
-                                'h3',
-                                null,
-                                'Redeem Rule:'
-                            ),
-                            _react2.default.createElement(
-                                'p',
-                                null,
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.'
+                                this.state.data[0].product.name
                             ),
                             _react2.default.createElement(
                                 'div',
-                                { className: 'btn' },
+                                { className: 'pic' },
+                                _react2.default.createElement('img', { alt: '', src: this.state.data[0].product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + this.state.data[0].product.images[0] : '' }),
                                 _react2.default.createElement(
-                                    _reactRouterDom.Link,
-                                    { to: '/coupon/redeem/' + this.state.id, 'data-rel': 'popup', 'data-position-to': 'window', 'data-transition': 'fade', className: 'item' },
-                                    ' Redeem'
+                                    'div',
+                                    { className: 'text-center btn-wrap' },
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { className: 'get-coupon-button', to: '/coupon/redeem/' + this.state.id },
+                                        'You Win! Get this product!'
+                                    )
                                 )
                             ),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'des' },
-                                'This button is only for machant  use!'
+                                this.state.data[0].couponCode
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'timer' },
+                                _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    'Expired: ',
+                                    this.state.data.expireTimeFormat
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'explain' },
+                                _react2.default.createElement(
+                                    'h3',
+                                    null,
+                                    'Redeem Rule:'
+                                ),
+                                _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    this.state.data[0].description
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'btn' },
+                                    _react2.default.createElement(
+                                        'button',
+                                        { className: 'item', onClick: this.showRedeemPopup },
+                                        'Redeem'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'des' },
+                                    'This button is only for machant use!'
+                                )
                             )
                         )
                     )
-                )
-            );
+                );
+            } else {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    'Loading...'
+                );
+            }
         }
     }]);
 
@@ -30621,6 +30533,468 @@ var BodyEvent = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = BodyEvent;
+
+/***/ }),
+/* 293 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by korman on 02.05.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var HelpPanel = function (_React$Component) {
+    _inherits(HelpPanel, _React$Component);
+
+    function HelpPanel() {
+        _classCallCheck(this, HelpPanel);
+
+        return _possibleConstructorReturn(this, (HelpPanel.__proto__ || Object.getPrototypeOf(HelpPanel)).apply(this, arguments));
+    }
+
+    _createClass(HelpPanel, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                { className: "footer clearfix" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "col-50" },
+                    _react2.default.createElement(
+                        "a",
+                        { href: "#" },
+                        "Ask Help!"
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "col-50 soc" },
+                    _react2.default.createElement(
+                        "a",
+                        { href: "#" },
+                        _react2.default.createElement("img", { src: "images/ico-1.png", alt: "" })
+                    ),
+                    _react2.default.createElement(
+                        "a",
+                        { href: "#" },
+                        _react2.default.createElement("img", { src: "images/ico-2.png", alt: "" })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return HelpPanel;
+}(_react2.default.Component);
+
+exports.default = HelpPanel;
+
+/***/ }),
+/* 294 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Config = __webpack_require__(72);
+
+var _Config2 = _interopRequireDefault(_Config);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(66);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _HelpPanel = __webpack_require__(293);
+
+var _HelpPanel2 = _interopRequireDefault(_HelpPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by korman on 02.05.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var JoinPanel = function (_React$Component) {
+    _inherits(JoinPanel, _React$Component);
+
+    function JoinPanel(props) {
+        _classCallCheck(this, JoinPanel);
+
+        var _this = _possibleConstructorReturn(this, (JoinPanel.__proto__ || Object.getPrototypeOf(JoinPanel)).call(this, props));
+
+        _this.state = {
+            eventId: props.eventId,
+            product: props.product != undefined ? props.product : null,
+            isJoined: props.isJoined
+        };
+        _this.joinConsumer = _this.joinConsumer.bind(_this);
+        console.log(_this.state);
+        return _this;
+    }
+
+    _createClass(JoinPanel, [{
+        key: 'joinConsumer',
+        value: function joinConsumer() {
+            var _this2 = this;
+
+            var config = new _Config2.default();
+            var consumerId = window.localStorage.getItem('user_id');
+
+            (0, _axios2.default)({
+                method: 'post',
+                url: config.baseUrl + 'api/kankan/shopper/event/join-consumer',
+                data: {
+                    eventId: this.state.eventId,
+                    consumerId: consumerId
+                }
+            }).then(function (res) {
+
+                if (res.data.message != undefined && res.data.message == '') {
+                    _this2.setState({
+                        isJoined: true
+                    });
+                }
+
+                console.log(_this2.state);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            if (!this.state.isJoined) {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'footer clearfix' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-50' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-50 footer-col' },
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'Origial:'
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                '$',
+                                this.state.product.price
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-50 footer-col' },
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'Lowest:'
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'orange' },
+                                '$0.00'
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-50 text-right' },
+                        _react2.default.createElement(
+                            'button',
+                            { className: 'main-btn', onClick: this.joinConsumer },
+                            'Join'
+                        )
+                    )
+                );
+            } else {
+                return _react2.default.createElement(_HelpPanel2.default, null);
+            }
+        }
+    }]);
+
+    return JoinPanel;
+}(_react2.default.Component);
+
+exports.default = JoinPanel;
+
+/***/ }),
+/* 295 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by korman on 01.05.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var CouponList = function (_React$Component) {
+    _inherits(CouponList, _React$Component);
+
+    function CouponList(props) {
+        _classCallCheck(this, CouponList);
+
+        var _this = _possibleConstructorReturn(this, (CouponList.__proto__ || Object.getPrototypeOf(CouponList)).call(this, props));
+
+        _this.state = {
+            status: props.status
+        };
+
+        console.log(_this.state);
+        return _this;
+    }
+
+    _createClass(CouponList, [{
+        key: "render",
+        value: function render() {
+
+            if (this.state.status == 0) {
+                return _react2.default.createElement(
+                    "span",
+                    { className: "label" },
+                    "Redeemed"
+                );
+            }
+
+            if (this.state.status == 1) {
+                return _react2.default.createElement("span", null);
+            }
+
+            if (this.state.status == 2) {
+                return _react2.default.createElement(
+                    "span",
+                    { className: "label" },
+                    "Expired"
+                );
+            }
+        }
+    }]);
+
+    return CouponList;
+}(_react2.default.Component);
+
+exports.default = CouponList;
+;
+
+/***/ }),
+/* 296 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by korman on 08.05.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var RedeemPopup = function (_React$Component) {
+    _inherits(RedeemPopup, _React$Component);
+
+    function RedeemPopup() {
+        _classCallCheck(this, RedeemPopup);
+
+        return _possibleConstructorReturn(this, (RedeemPopup.__proto__ || Object.getPrototypeOf(RedeemPopup)).apply(this, arguments));
+    }
+
+    _createClass(RedeemPopup, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                { id: "redeemPopup", className: "kankan-popup-overlay", style: { zIndex: 1000 } },
+                _react2.default.createElement(
+                    "div",
+                    { className: "kankan-popup" },
+                    _react2.default.createElement(
+                        "h2",
+                        null,
+                        "Here i am"
+                    ),
+                    _react2.default.createElement(
+                        "a",
+                        { className: "close", href: "#" },
+                        "\xD7"
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "content" },
+                        "This coupon will be marked as redeemed. You can\\'t use it any more!"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return RedeemPopup;
+}(_react2.default.Component);
+
+exports.default = RedeemPopup;
+
+/***/ }),
+/* 297 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Config = __webpack_require__(72);
+
+var _Config2 = _interopRequireDefault(_Config);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(66);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _HelpPanel = __webpack_require__(293);
+
+var _HelpPanel2 = _interopRequireDefault(_HelpPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by korman on 08.05.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+/**
+ * Created by korman on 02.05.17.
+ */
+
+var JoinPanel = function (_React$Component) {
+    _inherits(JoinPanel, _React$Component);
+
+    function JoinPanel(props) {
+        _classCallCheck(this, JoinPanel);
+
+        var _this = _possibleConstructorReturn(this, (JoinPanel.__proto__ || Object.getPrototypeOf(JoinPanel)).call(this, props));
+
+        _this.state = {
+            id: props.id,
+            sponsorId: props.sponsorId,
+            bets: props.bets
+        };
+
+        _this.lowerSponsor = _this.lowerSponsor.bind(_this);
+        return _this;
+    }
+
+    _createClass(JoinPanel, [{
+        key: 'lowerSponsor',
+        value: function lowerSponsor(e) {
+
+            var config = new _Config2.default();
+
+            _axios2.default.post(config.baseUrl + 'api/kankan/consumer/bet', {
+                eventId: this.state.id,
+                sponsorId: this.state.sponsorId
+            }).then(function (res) {
+                console.log(res);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            if (!this.state.bets.length > 0) {
+                return _react2.default.createElement(
+                    'button',
+                    { type: 'button', onClick: function onClick(e) {
+                            return _this2.lowerSponsor(e);
+                        } },
+                    'Lower'
+                );
+            } else {
+                return _react2.default.createElement('span', null);
+            }
+        }
+    }]);
+
+    return JoinPanel;
+}(_react2.default.Component);
+
+exports.default = JoinPanel;
 
 /***/ })
 /******/ ]);

@@ -1,3 +1,4 @@
+import Config from './components/Config';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import BodyCoupon from './components/coupon/BodyCoupon';
@@ -11,6 +12,7 @@ import Login from './components/user/Login';
 // import BodyContact from './components/BodyContact';
 import { Router } from 'react-router';
 import { HashRouter,Route, hashHistory } from 'react-router-dom'
+import axios from 'axios';
 
 export default class Index extends React.Component{
     constructor(){
@@ -21,6 +23,17 @@ export default class Index extends React.Component{
         if (/\?user=([\w\W]+)/.exec(window.location.search)) {
             var user = JSON.parse(decodeURIComponent(/\?user=([\w\W]+)/.exec(window.location.search)[1]));
             window.localStorage.setItem('user', JSON.stringify(user));
+
+            const config = new Config();
+            axios.post(config.baseUrl + 'api/kankan/consumer', {
+                snData: user,
+                snUnionId: user.unionid,
+                status: 1
+            }).then( res => {
+
+                window.localStorage.setItem('user_id', res.data.id);
+                window.location = '/';
+            });
         }
 
         const userJsonStr = window.localStorage.getItem('user');
