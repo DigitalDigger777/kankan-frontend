@@ -34,6 +34,7 @@ export default class JoinPanel extends React.Component{
             sponsorId: this.state.sponsorId,
         }).then(res => {
             console.log(res);
+            $('#lowerPopup').modal('show');
         });
     }
 

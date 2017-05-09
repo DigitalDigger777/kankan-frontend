@@ -35,11 +35,15 @@ export default class JoinPanel extends React.Component{
             }
         }).then( res => {
 
+            $('#joinPopup').modal('show');
             if (res.data.message != undefined && res.data.message == '') {
+
                 this.setState({
                     isJoined: true
                 });
+
             }
+
 
             console.log(this.state);
         });

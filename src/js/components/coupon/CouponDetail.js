@@ -7,6 +7,8 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RedeemPopup from './parts/RedeemPopup';
+import RedeemButton from './parts/RedeemButton';
+import CouponDetailStatus from './parts/CouponDetailStatus';
 
 export default class CouponDetail extends React.Component {
     constructor(props) {
@@ -17,12 +19,13 @@ export default class CouponDetail extends React.Component {
             data: null
         };
 
-        this.showRedeemPopup = this.showRedeemPopup.bind(this);
+        this.changeRedeemStatus = this.changeRedeemStatus.bind(this);
     }
 
     componentDidMount() {
         const config = new Config();
-        //
+        const consumerId = window.localStorage.getItem('user_id');
+
         axios.get(config.baseUrl + 'api/kankan/coupon/' + this.state.id)
             .then(res => {
                 console.log(res.data);
@@ -31,21 +34,18 @@ export default class CouponDetail extends React.Component {
                 this.setState({ data });
 
             });
+
+        axios.get(config.baseUrl + 'api/kankan/consumer/coupon?consumerId=' + consumerId + '&couponId=' + this.state.id)
+            .then(res => {
+                console.log(res);
+                const redeemStatus = res.data.redeemStatus;
+                this.setState({redeemStatus:redeemStatus});
+
+            });
     }
 
-    showRedeemPopup() {
-        //$('#redeemPopup').fadeIn();
-        const config = new Config();
-        const consumerId = window.localStorage.getItem('user_id');
-        const couponId = this.state.id;
-
-        axios.post(config.baseUrl + 'api/kankan/coupon/redeem', {
-            consumerId: consumerId,
-            couponId: couponId
-        }).then(res => {
-            alert('Redeem');
-        });
-
+    changeRedeemStatus(redeemStatus) {
+        this.setState({redeemStatus: redeemStatus});
     }
 
     render() {
@@ -56,16 +56,14 @@ export default class CouponDetail extends React.Component {
         if (this.state.data) {
             return (
                 <div data-reactroot="">
-                    <RedeemPopup/>
+                    <RedeemPopup couponId={this.state.id} redeemStatus={this.state.redeemStatus} changeRedeemStatus={this.changeRedeemStatus}/>
                     <div className="coupon">
                         <div>
                             <h1>{this.state.data[0].product.name}</h1>
                             <div className="pic">
                                 <img alt="" src={ this.state.data[0].product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + this.state.data[0].product.images[0] : ''}/>
-                                <div className="text-center btn-wrap">
-                                    <Link className="get-coupon-button" to={`/coupon/redeem/${this.state.id}`}>
-                                        You Win! Get this product!
-                                    </Link>
+                                <div className="msg-wrap">
+                                    <CouponDetailStatus redeemStatus={this.state.redeemStatus}/>
                                 </div>
                             </div>
                             <div className="des">
@@ -79,14 +77,7 @@ export default class CouponDetail extends React.Component {
                             <div className="explain">
                                 <h3>Redeem Rule:</h3>
                                 <p>{this.state.data[0].description}</p>
-                                <div className="btn">
-                                    <button className="item" onClick={this.showRedeemPopup}>
-                                        Redeem
-                                    </button>
-                                </div>
-                                <div className="des">
-                                    This button is only for machant use!
-                                </div>
+                                <RedeemButton redeemStatus={this.state.redeemStatus}/>
                             </div>
                         </div>
                     </div>

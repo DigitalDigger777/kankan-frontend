@@ -5,7 +5,7 @@
 import React from 'react';
 
 
-export default class CouponList extends React.Component{
+export default class CouponStatus extends React.Component{
     constructor(props){
         super(props);
 

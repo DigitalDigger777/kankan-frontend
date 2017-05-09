@@ -5,7 +5,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-export default class Pagination extends React.Component {
+export default class PopupRule extends React.Component {
 
     constructor(props){
         super(props);

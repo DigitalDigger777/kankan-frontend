@@ -141,21 +141,6 @@ button {
   color: #ffffff;
   background: #fa854b;
 }
-
-.get-coupon-button {
-  width: 16rem;
-  height: 2.4rem;
-  background: #fa854b;
-  color: #ffffff;
-  font: 0.85333rem/2.4rem -apple-system-font, "Helvetica Neue", sans-serif;
-  text-align: center;
-  display: inline-block;
-  border-radius: 0.42667rem;
-  margin-top: -1.17333rem;
-  border: 0;
-  text-decoration: none;
-}
-
 .col-20,
 .col-50,
 .col-80 {
@@ -169,6 +154,14 @@ button {
 }
 .col-80 {
   width: 80%;
+}
+.default-btn {
+  background: none;
+  color: #333;
+  padding: 0.3rem 0.8rem !important;
+  font-size: 0.74667rem;
+  border-radius: 3px;
+  border: 1px solid #aeaeae;
 }
 .main-btn {
   background: #fa854b;
@@ -190,17 +183,10 @@ button {
   clear: both;
   visibility: hidden;
 }
-.ui-popup .ui-footer a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-right: 1px solid #aeaeae;
-  font-size: 0.74667rem;
-  text-decoration: none;
-  color: #3e3e3e;
-  line-height: 2.5;
+.modal-header {
+  text-align: right;
+  padding: 5px 15px;
 }
-
-.bargain .banner {
-  text-align: center;
+.modal-header button {
+  background: none;
 }

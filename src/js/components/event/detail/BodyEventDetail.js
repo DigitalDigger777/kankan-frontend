@@ -10,6 +10,8 @@ import EventDetail from './lowerPriceTabs/EventDetail';
 import LowerPrice from './lowerPriceTabs/LowerPrice';
 import RecordPrice from './lowerPriceTabs/RecordPrice';
 import JoinPanel from './parts/JoinPanel';
+import JoinPopup from './parts/JoinPopup';
+import LowerPopup from './parts/LowerPopup';
 
 export default class BodyEventDetail extends React.Component{
     constructor(props) {
@@ -67,6 +69,7 @@ export default class BodyEventDetail extends React.Component{
             consumerId: consumerId
         }).then(res => {
             console.log(res);
+            $('#lowerPopup').modal('show');
         });
     }
 
@@ -92,8 +95,10 @@ export default class BodyEventDetail extends React.Component{
 
             return (
                 <div>
+                    <JoinPopup/>
+                    <LowerPopup/>
                     <div className="bargain">
-                        <div className="banner">
+                        <div className="banner" style={{textAlign: "center"}}>
                             <img src={ this.state.data.product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + this.state.data.product.images[0] : ''} />
                             <p>Event Closed：1 Day 16 Hours 27 Mins 12 Seconds</p>
                         </div>

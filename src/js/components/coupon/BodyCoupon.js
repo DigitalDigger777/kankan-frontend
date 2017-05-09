@@ -38,7 +38,7 @@ export default class BodyCoupon extends React.Component{
             <div>
                 <div>
                     <div className="main">
-                        <Search />
+                        <Search type="coupon"/>
                         <div className="list list_coupon">
                             <CouponList page={this.state.page} />
                         </div>

@@ -13019,7 +13019,7 @@ var BodyCoupon = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'main' },
-                        _react2.default.createElement(_Search2.default, null),
+                        _react2.default.createElement(_Search2.default, { type: 'coupon' }),
                         _react2.default.createElement(
                             'div',
                             { className: 'list list_coupon' },
@@ -13132,7 +13132,7 @@ var BodyEvent = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'main' },
-                        _react2.default.createElement(_Search2.default, null),
+                        _react2.default.createElement(_Search2.default, { type: 'event' }),
                         _react2.default.createElement(
                             'div',
                             { className: 'list' },
@@ -14217,6 +14217,10 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _reactRouterDom = __webpack_require__(17);
 
+var _RulePopup = __webpack_require__(300);
+
+var _RulePopup2 = _interopRequireDefault(_RulePopup);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14236,8 +14240,11 @@ var CouponList = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (CouponList.__proto__ || Object.getPrototypeOf(CouponList)).call(this, props));
 
         _this.state = {
-            items: []
+            items: [],
+            rule: ''
         };
+
+        _this.showRulePopup = _this.showRulePopup.bind(_this);
         return _this;
     }
 
@@ -14284,8 +14291,18 @@ var CouponList = function (_React$Component) {
             });
         }
     }, {
+        key: 'showRulePopup',
+        value: function showRulePopup(e, description) {
+            e.preventDefault();
+            this.setState({ rule: description });
+            console.log(this.state);
+            $('#rulePopup').modal('show');
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this4 = this;
+
             var config = new _Config2.default();
             var pages = [];
 
@@ -14295,100 +14312,107 @@ var CouponList = function (_React$Component) {
 
             if (this.state.items.length > 0) {
                 return _react2.default.createElement(
-                    'ul',
+                    'div',
                     null,
-                    this.state.items.map(function (item, index) {
-                        return _react2.default.createElement(
-                            'li',
-                            { key: index },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'shopping' },
-                                _react2.default.createElement('img', { src: item.event.product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + item.event.product.images[0] : '', className: 'sh' }),
+                    _react2.default.createElement(_RulePopup2.default, { rule: this.state.rule }),
+                    _react2.default.createElement(
+                        'ul',
+                        null,
+                        this.state.items.map(function (item, index) {
+                            return _react2.default.createElement(
+                                'li',
+                                { key: index },
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'shop-ri' },
+                                    { className: 'shopping' },
+                                    _react2.default.createElement('img', { src: item.event.product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + item.event.product.images[0] : '', className: 'sh' }),
                                     _react2.default.createElement(
-                                        'a',
-                                        { href: '#rule-popup', 'data-rel': 'popup', className: 'rule' },
-                                        _react2.default.createElement('img', { src: 'images/u68.png', alt: '' }),
+                                        'div',
+                                        { className: 'shop-ri' },
+                                        _react2.default.createElement(
+                                            'a',
+                                            { href: '#', 'data-rel': 'popup', className: 'rule', onClick: function onClick(e, rule) {
+                                                    return _this4.showRulePopup(e, item.event.description);
+                                                } },
+                                            _react2.default.createElement('img', { src: 'images/u68.png', alt: '' }),
+                                            _react2.default.createElement(
+                                                'p',
+                                                null,
+                                                'Rules'
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            'h3',
+                                            null,
+                                            item.event.product.name
+                                        ),
                                         _react2.default.createElement(
                                             'p',
                                             null,
-                                            'Rules'
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'h3',
-                                        null,
-                                        item.event.product.name
-                                    ),
-                                    _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        'Lowest Price: $',
-                                        item.lowerPrice
-                                    ),
-                                    _react2.default.createElement(
-                                        'p',
-                                        { className: 'mt15' },
-                                        'Original Price: $',
-                                        item.event.product.price
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'items' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'item' },
-                                    _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        'Total'
-                                    ),
-                                    _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        item.event.coupon.totalQuantity
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'item' },
-                                    _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        'Available'
-                                    ),
-                                    _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        item.event.coupon.availableQuantity
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'item clearfix' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-80 lh2' },
-                                        'Join'
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-20' },
+                                            'Lowest Price: $',
+                                            item.lowerPrice
+                                        ),
                                         _react2.default.createElement(
-                                            _reactRouterDom.Link,
-                                            { className: 'lh2', to: '/event/detail/' + item.event.id + '/event_detail' },
-                                            '> '
+                                            'p',
+                                            { className: 'mt15' },
+                                            'Original Price: $',
+                                            item.event.product.price
+                                        )
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'items' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'item' },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Total'
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            item.event.coupon.totalQuantity
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'item' },
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            'Available'
+                                        ),
+                                        _react2.default.createElement(
+                                            'p',
+                                            null,
+                                            item.event.coupon.availableQuantity
+                                        )
+                                    ),
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'item clearfix' },
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'col-80 lh2' },
+                                            'Join'
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'col-20' },
+                                            _react2.default.createElement(
+                                                _reactRouterDom.Link,
+                                                { className: 'lh2', to: '/event/detail/' + item.event.id + '/event_detail' },
+                                                '>'
+                                            )
                                         )
                                     )
                                 )
-                            )
-                        );
-                    })
+                            );
+                        })
+                    )
                 );
             } else {
                 return _react2.default.createElement(
@@ -29212,13 +29236,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Created by zhangbin on 2017/4/4.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
-var Pagination = function (_React$Component) {
-    _inherits(Pagination, _React$Component);
+var PopupRule = function (_React$Component) {
+    _inherits(PopupRule, _React$Component);
 
-    function Pagination(props) {
-        _classCallCheck(this, Pagination);
+    function PopupRule(props) {
+        _classCallCheck(this, PopupRule);
 
-        var _this = _possibleConstructorReturn(this, (Pagination.__proto__ || Object.getPrototypeOf(Pagination)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (PopupRule.__proto__ || Object.getPrototypeOf(PopupRule)).call(this, props));
 
         console.log('construct', props);
         var page = props.page !== undefined ? parseInt(props.page) : 1;
@@ -29235,7 +29259,7 @@ var Pagination = function (_React$Component) {
         return _this;
     }
 
-    _createClass(Pagination, [{
+    _createClass(PopupRule, [{
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(props) {
             console.log('receive prop', props);
@@ -29275,10 +29299,10 @@ var Pagination = function (_React$Component) {
         }
     }]);
 
-    return Pagination;
+    return PopupRule;
 }(_react2.default.Component);
 
-exports.default = Pagination;
+exports.default = PopupRule;
 
 /***/ }),
 /* 279 */
@@ -29322,6 +29346,14 @@ var _RecordPrice2 = _interopRequireDefault(_RecordPrice);
 var _JoinPanel = __webpack_require__(294);
 
 var _JoinPanel2 = _interopRequireDefault(_JoinPanel);
+
+var _JoinPopup = __webpack_require__(301);
+
+var _JoinPopup2 = _interopRequireDefault(_JoinPopup);
+
+var _LowerPopup = __webpack_require__(302);
+
+var _LowerPopup2 = _interopRequireDefault(_LowerPopup);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29396,6 +29428,7 @@ var BodyEventDetail = function (_React$Component) {
                 consumerId: consumerId
             }).then(function (res) {
                 console.log(res);
+                $('#lowerPopup').modal('show');
             });
         }
     }, {
@@ -29423,12 +29456,14 @@ var BodyEventDetail = function (_React$Component) {
                 return _react2.default.createElement(
                     'div',
                     null,
+                    _react2.default.createElement(_JoinPopup2.default, null),
+                    _react2.default.createElement(_LowerPopup2.default, null),
                     _react2.default.createElement(
                         'div',
                         { className: 'bargain' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'banner' },
+                            { className: 'banner', style: { textAlign: "center" } },
                             _react2.default.createElement('img', { src: this.state.data.product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + this.state.data.product.images[0] : '' }),
                             _react2.default.createElement(
                                 'p',
@@ -29690,33 +29725,60 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Search = function (_React$Component) {
     _inherits(Search, _React$Component);
 
-    function Search() {
+    function Search(props) {
         _classCallCheck(this, Search);
 
-        return _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
+
+        _this.state = {
+            type: 'event'
+        };
+        return _this;
     }
 
     _createClass(Search, [{
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: 'searchBox' },
-                _react2.default.createElement(
+
+            if (this.state.type == 'event') {
+                return _react2.default.createElement(
                     'div',
-                    { className: 'search' },
-                    _react2.default.createElement('input', { type: 'text', placeholder: 'Search Coupon' })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'search-Btn' },
+                    { className: 'searchBox' },
                     _react2.default.createElement(
-                        'button',
-                        null,
-                        'Search'
+                        'div',
+                        { className: 'search' },
+                        _react2.default.createElement('input', { type: 'text', placeholder: 'Search Event' })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'search-Btn' },
+                        _react2.default.createElement(
+                            'button',
+                            null,
+                            'Search'
+                        )
                     )
-                )
-            );
+                );
+            } else {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'searchBox' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'search' },
+                        _react2.default.createElement('input', { type: 'text', placeholder: 'Search Coupon' })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'search-Btn' },
+                        _react2.default.createElement(
+                            'button',
+                            null,
+                            'Search'
+                        )
+                    )
+                );
+            }
         }
     }]);
 
@@ -30053,6 +30115,14 @@ var _RedeemPopup = __webpack_require__(296);
 
 var _RedeemPopup2 = _interopRequireDefault(_RedeemPopup);
 
+var _RedeemButton = __webpack_require__(299);
+
+var _RedeemButton2 = _interopRequireDefault(_RedeemButton);
+
+var _CouponDetailStatus = __webpack_require__(298);
+
+var _CouponDetailStatus2 = _interopRequireDefault(_CouponDetailStatus);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30076,7 +30146,7 @@ var CouponDetail = function (_React$Component) {
             data: null
         };
 
-        _this.showRedeemPopup = _this.showRedeemPopup.bind(_this);
+        _this.changeRedeemStatus = _this.changeRedeemStatus.bind(_this);
         return _this;
     }
 
@@ -30086,28 +30156,25 @@ var CouponDetail = function (_React$Component) {
             var _this2 = this;
 
             var config = new _Config2.default();
-            //
+            var consumerId = window.localStorage.getItem('user_id');
+
             _axios2.default.get(config.baseUrl + 'api/kankan/coupon/' + this.state.id).then(function (res) {
                 console.log(res.data);
                 var data = res.data;
                 // const countPages = res.data.count_pages;
                 _this2.setState({ data: data });
             });
+
+            _axios2.default.get(config.baseUrl + 'api/kankan/consumer/coupon?consumerId=' + consumerId + '&couponId=' + this.state.id).then(function (res) {
+                console.log(res);
+                var redeemStatus = res.data.redeemStatus;
+                _this2.setState({ redeemStatus: redeemStatus });
+            });
         }
     }, {
-        key: 'showRedeemPopup',
-        value: function showRedeemPopup() {
-            //$('#redeemPopup').fadeIn();
-            var config = new _Config2.default();
-            var consumerId = window.localStorage.getItem('user_id');
-            var couponId = this.state.id;
-
-            _axios2.default.post(config.baseUrl + 'api/kankan/coupon/redeem', {
-                consumerId: consumerId,
-                couponId: couponId
-            }).then(function (res) {
-                alert('Redeem');
-            });
+        key: 'changeRedeemStatus',
+        value: function changeRedeemStatus(redeemStatus) {
+            this.setState({ redeemStatus: redeemStatus });
         }
     }, {
         key: 'render',
@@ -30120,7 +30187,7 @@ var CouponDetail = function (_React$Component) {
                 return _react2.default.createElement(
                     'div',
                     { 'data-reactroot': '' },
-                    _react2.default.createElement(_RedeemPopup2.default, null),
+                    _react2.default.createElement(_RedeemPopup2.default, { couponId: this.state.id, redeemStatus: this.state.redeemStatus, changeRedeemStatus: this.changeRedeemStatus }),
                     _react2.default.createElement(
                         'div',
                         { className: 'coupon' },
@@ -30138,12 +30205,8 @@ var CouponDetail = function (_React$Component) {
                                 _react2.default.createElement('img', { alt: '', src: this.state.data[0].product.images.length > 0 ? config.baseImagePath + 'uploads/images/' + this.state.data[0].product.images[0] : '' }),
                                 _react2.default.createElement(
                                     'div',
-                                    { className: 'text-center btn-wrap' },
-                                    _react2.default.createElement(
-                                        _reactRouterDom.Link,
-                                        { className: 'get-coupon-button', to: '/coupon/redeem/' + this.state.id },
-                                        'You Win! Get this product!'
-                                    )
+                                    { className: 'msg-wrap' },
+                                    _react2.default.createElement(_CouponDetailStatus2.default, { redeemStatus: this.state.redeemStatus })
                                 )
                             ),
                             _react2.default.createElement(
@@ -30178,20 +30241,7 @@ var CouponDetail = function (_React$Component) {
                                     null,
                                     this.state.data[0].description
                                 ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'btn' },
-                                    _react2.default.createElement(
-                                        'button',
-                                        { className: 'item', onClick: this.showRedeemPopup },
-                                        'Redeem'
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'des' },
-                                    'This button is only for machant use!'
-                                )
+                                _react2.default.createElement(_RedeemButton2.default, { redeemStatus: this.state.redeemStatus })
                             )
                         )
                     )
@@ -30682,7 +30732,9 @@ var JoinPanel = function (_React$Component) {
                 }
             }).then(function (res) {
 
+                $('#joinPopup').modal('show');
                 if (res.data.message != undefined && res.data.message == '') {
+
                     _this2.setState({
                         isJoined: true
                     });
@@ -30780,13 +30832,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Created by korman on 01.05.17.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
-var CouponList = function (_React$Component) {
-    _inherits(CouponList, _React$Component);
+var CouponStatus = function (_React$Component) {
+    _inherits(CouponStatus, _React$Component);
 
-    function CouponList(props) {
-        _classCallCheck(this, CouponList);
+    function CouponStatus(props) {
+        _classCallCheck(this, CouponStatus);
 
-        var _this = _possibleConstructorReturn(this, (CouponList.__proto__ || Object.getPrototypeOf(CouponList)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (CouponStatus.__proto__ || Object.getPrototypeOf(CouponStatus)).call(this, props));
 
         _this.state = {
             status: props.status
@@ -30796,7 +30848,7 @@ var CouponList = function (_React$Component) {
         return _this;
     }
 
-    _createClass(CouponList, [{
+    _createClass(CouponStatus, [{
         key: "render",
         value: function render() {
 
@@ -30822,10 +30874,10 @@ var CouponList = function (_React$Component) {
         }
     }]);
 
-    return CouponList;
+    return CouponStatus;
 }(_react2.default.Component);
 
-exports.default = CouponList;
+exports.default = CouponStatus;
 ;
 
 /***/ }),
@@ -30841,9 +30893,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _Config = __webpack_require__(72);
+
+var _Config2 = _interopRequireDefault(_Config);
+
 var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(66);
+
+var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30858,35 +30918,81 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var RedeemPopup = function (_React$Component) {
     _inherits(RedeemPopup, _React$Component);
 
-    function RedeemPopup() {
+    function RedeemPopup(props) {
         _classCallCheck(this, RedeemPopup);
 
-        return _possibleConstructorReturn(this, (RedeemPopup.__proto__ || Object.getPrototypeOf(RedeemPopup)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (RedeemPopup.__proto__ || Object.getPrototypeOf(RedeemPopup)).call(this, props));
+
+        _this.state = {
+            couponId: props.couponId,
+            redeemStatus: props.redeemStatus
+        };
+
+        _this.imSure = _this.imSure.bind(_this);
+        return _this;
     }
 
     _createClass(RedeemPopup, [{
-        key: "render",
+        key: 'imSure',
+        value: function imSure() {
+            var _this2 = this;
+
+            var config = new _Config2.default();
+            var consumerId = window.localStorage.getItem('user_id');
+            var couponId = this.state.couponId;
+
+            _axios2.default.post(config.baseUrl + 'api/kankan/coupon/redeem', {
+                consumerId: consumerId,
+                couponId: couponId
+            }).then(function (res) {
+                $('#redeemPopup').modal('hide');
+                _this2.props.changeRedeemStatus(0);
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                "div",
-                { id: "redeemPopup", className: "kankan-popup-overlay", style: { zIndex: 1000 } },
+                'div',
+                { className: 'modal fade', id: 'redeemPopup', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myModalLabel' },
                 _react2.default.createElement(
-                    "div",
-                    { className: "kankan-popup" },
+                    'div',
+                    { className: 'modal-dialog', role: 'document' },
                     _react2.default.createElement(
-                        "h2",
-                        null,
-                        "Here i am"
-                    ),
-                    _react2.default.createElement(
-                        "a",
-                        { className: "close", href: "#" },
-                        "\xD7"
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "content" },
-                        "This coupon will be marked as redeemed. You can\\'t use it any more!"
+                        'div',
+                        { className: 'modal-content' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-header' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { 'aria-hidden': 'true' },
+                                    '\xD7'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-body' },
+                            'This coupon will be marked as redeemed. You can\'t use it any more!'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-footer' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'default-btn', 'data-dismiss': 'modal' },
+                                'Go Back'
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'main-btn', onClick: this.imSure },
+                                'I\'m Sure'
+                            )
+                        )
                     )
                 )
             );
@@ -30970,6 +31076,7 @@ var JoinPanel = function (_React$Component) {
                 sponsorId: this.state.sponsorId
             }).then(function (res) {
                 console.log(res);
+                $('#lowerPopup').modal('show');
             });
         }
     }, {
@@ -30995,6 +31102,514 @@ var JoinPanel = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = JoinPanel;
+
+/***/ }),
+/* 298 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Config = __webpack_require__(72);
+
+var _Config2 = _interopRequireDefault(_Config);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(66);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _reactRouterDom = __webpack_require__(17);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by korman on 01.05.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var CouponDetailStatus = function (_React$Component) {
+    _inherits(CouponDetailStatus, _React$Component);
+
+    function CouponDetailStatus(props) {
+        _classCallCheck(this, CouponDetailStatus);
+
+        var _this = _possibleConstructorReturn(this, (CouponDetailStatus.__proto__ || Object.getPrototypeOf(CouponDetailStatus)).call(this, props));
+
+        _this.state = {
+            redeemStatus: props.redeemStatus
+        };
+
+        console.log('Coupon detail status', _this.state);
+        return _this;
+    }
+
+    _createClass(CouponDetailStatus, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(props) {
+            this.state = {
+                redeemStatus: props.redeemStatus
+            };
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            if (this.state.redeemStatus != undefined) {
+                if (this.state.redeemStatus == 1) {
+                    return _react2.default.createElement(
+                        'span',
+                        { className: 'msg' },
+                        'Active'
+                    );
+                }
+
+                if (this.state.redeemStatus == 2) {
+                    return _react2.default.createElement(
+                        'span',
+                        { className: 'msg' },
+                        'Expired'
+                    );
+                }
+
+                if (this.state.redeemStatus == 0) {
+                    return _react2.default.createElement(
+                        'span',
+                        { className: 'msg' },
+                        'Redeemed'
+                    );
+                }
+            } else {
+                return _react2.default.createElement(
+                    'span',
+                    { className: 'msg' },
+                    '...'
+                );
+            }
+            // return (
+            //     <Link className="get-coupon-button" to={`/coupon/redeem/${this.state.couponId}`}>
+            //         You Win! Get this product!
+            //     </Link>
+            // );
+        }
+    }]);
+
+    return CouponDetailStatus;
+}(_react2.default.Component);
+
+exports.default = CouponDetailStatus;
+;
+
+/***/ }),
+/* 299 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by korman on 08.05.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var RedeemButton = function (_React$Component) {
+    _inherits(RedeemButton, _React$Component);
+
+    function RedeemButton(props) {
+        _classCallCheck(this, RedeemButton);
+
+        var _this = _possibleConstructorReturn(this, (RedeemButton.__proto__ || Object.getPrototypeOf(RedeemButton)).call(this, props));
+
+        _this.state = {
+            redeemStatus: props.redeemStatus
+        };
+
+        console.log('redeem button', _this.state);
+        return _this;
+    }
+
+    _createClass(RedeemButton, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(props) {
+            this.state = {
+                redeemStatus: props.redeemStatus
+            };
+        }
+    }, {
+        key: 'showRedeemPopup',
+        value: function showRedeemPopup() {
+            $('#redeemPopup').modal('show');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            if (this.state.redeemStatus == 1) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'btn' },
+                        _react2.default.createElement(
+                            'button',
+                            { className: 'item', onClick: this.showRedeemPopup },
+                            'Redeem'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'des' },
+                        'This button is only for machant use!'
+                    )
+                );
+            } else {
+                return _react2.default.createElement('div', null);
+            }
+        }
+    }]);
+
+    return RedeemButton;
+}(_react2.default.Component);
+
+exports.default = RedeemButton;
+
+/***/ }),
+/* 300 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by zhangbin on 2017/4/4.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var RulePopup = function (_React$Component) {
+    _inherits(RulePopup, _React$Component);
+
+    function RulePopup(props) {
+        _classCallCheck(this, RulePopup);
+
+        var _this = _possibleConstructorReturn(this, (RulePopup.__proto__ || Object.getPrototypeOf(RulePopup)).call(this, props));
+
+        _this.state = {
+            rule: props.rule
+        };
+
+        console.log(_this.state);
+        return _this;
+    }
+
+    _createClass(RulePopup, [{
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(props) {
+            this.state = {
+                rule: props.rule
+            };
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                { className: "modal fade", id: "rulePopup", tabIndex: "-1", role: "dialog", "aria-labelledby": "myModalLabel" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "modal-dialog", role: "document" },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "modal-content" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "modal-header" },
+                            _react2.default.createElement(
+                                "button",
+                                { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
+                                _react2.default.createElement(
+                                    "span",
+                                    { "aria-hidden": "true" },
+                                    "\xD7"
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "modal-body" },
+                            this.state.rule
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "modal-footer" },
+                            _react2.default.createElement(
+                                "button",
+                                { type: "button", className: "default-btn", "data-dismiss": "modal" },
+                                "Ok"
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return RulePopup;
+}(_react2.default.Component);
+
+exports.default = RulePopup;
+
+/***/ }),
+/* 301 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by zhangbin on 2017/4/4.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+var JoinPopup = function (_React$Component) {
+    _inherits(JoinPopup, _React$Component);
+
+    function JoinPopup(props) {
+        _classCallCheck(this, JoinPopup);
+
+        return _possibleConstructorReturn(this, (JoinPopup.__proto__ || Object.getPrototypeOf(JoinPopup)).call(this, props));
+    }
+
+    _createClass(JoinPopup, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                { className: "modal fade", id: "joinPopup", tabIndex: "-1", role: "dialog", "aria-labelledby": "myModalLabel" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "modal-dialog", role: "document" },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "modal-content" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "modal-header" },
+                            _react2.default.createElement(
+                                "button",
+                                { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
+                                _react2.default.createElement(
+                                    "span",
+                                    { "aria-hidden": "true" },
+                                    "\xD7"
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "modal-body" },
+                            "Congratulations, you joined the event"
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "modal-footer" },
+                            _react2.default.createElement(
+                                "button",
+                                { type: "button", className: "default-btn", "data-dismiss": "modal" },
+                                "Ok"
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return JoinPopup;
+}(_react2.default.Component);
+
+exports.default = JoinPopup;
+
+/***/ }),
+/* 302 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Config = __webpack_require__(72);
+
+var _Config2 = _interopRequireDefault(_Config);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(66);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _HelpPanel = __webpack_require__(293);
+
+var _HelpPanel2 = _interopRequireDefault(_HelpPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by korman on 08.05.17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+/**
+ * Created by korman on 02.05.17.
+ */
+
+var LowerPopup = function (_React$Component) {
+    _inherits(LowerPopup, _React$Component);
+
+    function LowerPopup(props) {
+        _classCallCheck(this, LowerPopup);
+
+        var _this = _possibleConstructorReturn(this, (LowerPopup.__proto__ || Object.getPrototypeOf(LowerPopup)).call(this, props));
+
+        _this.state = {
+            id: props.id,
+            sponsorId: props.sponsorId,
+            bets: props.bets
+        };
+
+        _this.lowerSponsor = _this.lowerSponsor.bind(_this);
+        return _this;
+    }
+
+    _createClass(LowerPopup, [{
+        key: 'lowerSponsor',
+        value: function lowerSponsor(e) {
+
+            var config = new _Config2.default();
+
+            _axios2.default.post(config.baseUrl + 'api/kankan/consumer/bet', {
+                eventId: this.state.id,
+                sponsorId: this.state.sponsorId
+            }).then(function (res) {
+                console.log(res);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'modal fade', id: 'lowerPopup', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'myModalLabel' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'modal-dialog', role: 'document' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'modal-content' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-header' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { 'aria-hidden': 'true' },
+                                    '\xD7'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-body' },
+                            'You lowered this price'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-footer' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'default-btn', 'data-dismiss': 'modal' },
+                                'Ok'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return LowerPopup;
+}(_react2.default.Component);
+
+exports.default = LowerPopup;
 
 /***/ })
 /******/ ]);

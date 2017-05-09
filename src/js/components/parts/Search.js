@@ -7,16 +7,38 @@ import {Link} from 'react-router-dom';
 
 export default class Search extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            type: 'event'
+        };
+    }
+
+
     render(){
-        return (
-            <div className="searchBox">
-                <div className="search">
-                    <input type="text" placeholder="Search Coupon" />
+
+        if (this.state.type == 'event') {
+            return (
+                <div className="searchBox">
+                    <div className="search">
+                        <input type="text" placeholder="Search Event"/>
+                    </div>
+                    <div className="search-Btn">
+                        <button>Search</button>
+                    </div>
                 </div>
-                <div className="search-Btn">
-                    <button>Search</button>
+            )
+        } else {
+            return (
+                <div className="searchBox">
+                    <div className="search">
+                        <input type="text" placeholder="Search Coupon"/>
+                    </div>
+                    <div className="search-Btn">
+                        <button>Search</button>
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }

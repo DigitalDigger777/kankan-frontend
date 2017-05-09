@@ -35,7 +35,7 @@ export default class BodyEvent extends React.Component{
             <div>
                 <div>
                     <div className="main">
-                        <Search />
+                        <Search type="event" />
                         <div className="list">
                             <EventList page={this.state.page} />
                         </div>
