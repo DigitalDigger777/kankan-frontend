@@ -12,8 +12,10 @@ export default class CouponList extends React.Component{
         super(props);
         console.log('coupon construct', props);
         this.state = {
-            items: []
+            items: [],
+            search: props.search
         }
+        console.log(props.search);
     }
 
     componentDidMount() {
@@ -43,7 +45,8 @@ export default class CouponList extends React.Component{
                 method: 'LIST',
                 page: this.props.page,
                 items_on_page: 5,
-                consumerId: consumerId
+                consumerId: consumerId,
+                search: props.search
             }
         }).then(res => {
 

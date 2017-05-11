@@ -13,7 +13,7 @@ import JoinPanel from './parts/JoinPanel';
 import JoinPopup from './parts/JoinPopup';
 import LowerPopup from './parts/LowerPopup';
 
-export default class BodyEventDetail extends React.Component{
+export default class BodyEventDetailFriend extends React.Component{
     constructor(props) {
         super(props);
         console.log(props.match.params.tab);
@@ -77,7 +77,19 @@ export default class BodyEventDetail extends React.Component{
         const config = new Config();
 
         if (this.state.data) {
+            let tab = <EventDetail description={this.state.data.description} />;
 
+            if (this.state.tab == 'event_detail') {
+                tab = <EventDetail description={this.state.data.description} />;
+            }
+
+            if (this.state.tab == 'lower_price') {
+                tab = <LowerPrice sponsors={this.state.data.sponsors} id={this.state.id}/>;
+            }
+
+            if (this.state.tab == 'record_price') {
+                tab = <RecordPrice bets={this.state.data.bets }/>;
+            }
 
             const user = JSON.parse(window.localStorage.getItem('user'));
 
@@ -94,21 +106,36 @@ export default class BodyEventDetail extends React.Component{
                             <h3 className="title">{ this.state.data.product.name}</h3>
                             <div className="items">
                                 <ul>
+                                    <li><span>Original Price：${ this.state.data.product.price }</span><span>Lowest Price：$0.00</span></li>
                                     <li>
-                                        <span>Original Price：${ this.state.data.product.price }</span>
-                                        <span>Lowest Price：$0.00</span>
-                                    </li>
-                                    <li>
-                                        <span>Total Quantity：{this.state.data.totalQuantity}</span>
-                                        <span>Available Quantity：{this.state.data.availableQuantity}</span>
+                                        <span>Total Quantity：{this.state.data.coupon.totalQuantity}</span>
+                                        <span>Available Quantity：{this.state.data.coupon.availableQuantity}</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div>
                             <div className="userBox">
-                                <h3 className="title">Event Detail:</h3>
-                                <p className="e-detail">{this.state.data.description}</p>
+                                <h3 className="top"><img alt="" src={user.headimgurl} />{ user.nickname }</h3>
+                                <p className="c">Current price：<span>${ this.state.data.bets[this.state.data.bets.length - 1].currentPrice }</span></p>
+                                <p className="c">Please help your friend to lower the price. First click below sponsor to lower the price. Then you can lower it by yourself.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="bargainSwitch">
+                                <div className="titles">
+                                    {/*<a href="kankan_home-friend_lower-event_detail__e.html"><span className="item on">Event Detail</span></a>*/}
+                                    <Link to={`/event/detail/${this.state.id}/event_detail`}><span className={`item ${this.state.tab == 'event_detail' ? 'on' : ''}`}>Event Detail</span></Link>
+                                    <Link to={`/event/detail/${this.state.id}/lower_price`}><span className={`item ${this.state.tab == 'lower_price' ? 'on' : ''}`}>Lower the price</span></Link>
+                                    <Link to={`/event/detail/${this.state.id}/record_price`}><span className={`item ${this.state.tab == 'record_price' ? 'on' : ''}`}>Price Record</span></Link>
+                                </div>
+                                {tab}
+                            </div>
+                        </div>
+                        <div className="bargainEvent">
+                            <h3>Lower the Price</h3>
+                            <div>
+                                <button type="button" onClick={this.lowerConsumer}>Lower</button>
                             </div>
                         </div>
                     </div>

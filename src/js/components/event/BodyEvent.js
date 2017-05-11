@@ -18,15 +18,26 @@ export default class BodyEvent extends React.Component{
         let page = props.match.params.page !== undefined ? props.match.params.page : 1;
 
         this.state = {
-            page: page
-        }
+            page: page,
+            search: null
+        };
+
+        this.changeSearch = this.changeSearch.bind(this);
     }
 
     componentWillReceiveProps(props) {
 
         this.state = {
-            page: props.match.params.page !== undefined ? props.match.params.page : 1
+            page: props.match.params.page !== undefined ? props.match.params.page : 1,
+            search: props.search
         }
+
+        console.log(this.state);
+    }
+
+    changeSearch(search) {
+        this.setState({search:search});
+        console.log('change search ', search);
     }
 
     render(){
@@ -35,9 +46,9 @@ export default class BodyEvent extends React.Component{
             <div>
                 <div>
                     <div className="main">
-                        <Search type="event" />
+                        <Search type="event" changeSearch={this.changeSearch}/>
                         <div className="list">
-                            <EventList page={this.state.page} />
+                            <EventList page={this.state.page} search={this.state.search}/>
                         </div>
                         <Pagination page={this.state.page} type="event" />
                         <div className="column">

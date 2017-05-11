@@ -12986,10 +12986,13 @@ var BodyCoupon = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (BodyCoupon.__proto__ || Object.getPrototypeOf(BodyCoupon)).call(this, props));
 
         console.log('coupon body construct', props.match.params.page);
+
         _this.state = {
             items: [],
             page: props.match.params.page !== undefined ? props.match.params.page : 1
         };
+
+        _this.changeSearch = _this.changeSearch.bind(_this);
         return _this;
     }
 
@@ -13004,8 +13007,14 @@ var BodyCoupon = function (_React$Component) {
 
             this.state = {
                 items: [],
-                page: props.match.params.page !== undefined ? props.match.params.page : 1
+                page: props.match.params.page !== undefined ? props.match.params.page : 1,
+                search: null
             };
+        }
+    }, {
+        key: 'changeSearch',
+        value: function changeSearch(search) {
+            this.setState({ search: search });
         }
     }, {
         key: 'render',
@@ -13019,11 +13028,11 @@ var BodyCoupon = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'main' },
-                        _react2.default.createElement(_Search2.default, { type: 'coupon' }),
+                        _react2.default.createElement(_Search2.default, { type: 'coupon', changeSearch: this.changeSearch }),
                         _react2.default.createElement(
                             'div',
                             { className: 'list list_coupon' },
-                            _react2.default.createElement(_CouponList2.default, { page: this.state.page })
+                            _react2.default.createElement(_CouponList2.default, { page: this.state.page, search: this.state.search })
                         ),
                         _react2.default.createElement(_Pagination2.default, { page: this.state.page, type: 'coupon' }),
                         _react2.default.createElement(
@@ -13106,8 +13115,11 @@ var BodyEvent = function (_React$Component) {
         var page = props.match.params.page !== undefined ? props.match.params.page : 1;
 
         _this.state = {
-            page: page
+            page: page,
+            search: null
         };
+
+        _this.changeSearch = _this.changeSearch.bind(_this);
         return _this;
     }
 
@@ -13116,8 +13128,17 @@ var BodyEvent = function (_React$Component) {
         value: function componentWillReceiveProps(props) {
 
             this.state = {
-                page: props.match.params.page !== undefined ? props.match.params.page : 1
+                page: props.match.params.page !== undefined ? props.match.params.page : 1,
+                search: props.search
             };
+
+            console.log(this.state);
+        }
+    }, {
+        key: 'changeSearch',
+        value: function changeSearch(search) {
+            this.setState({ search: search });
+            console.log('change search ', search);
         }
     }, {
         key: 'render',
@@ -13132,11 +13153,11 @@ var BodyEvent = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'main' },
-                        _react2.default.createElement(_Search2.default, { type: 'event' }),
+                        _react2.default.createElement(_Search2.default, { type: 'event', changeSearch: this.changeSearch }),
                         _react2.default.createElement(
                             'div',
                             { className: 'list' },
-                            _react2.default.createElement(_EventList2.default, { page: this.state.page })
+                            _react2.default.createElement(_EventList2.default, { page: this.state.page, search: this.state.search })
                         ),
                         _react2.default.createElement(_Pagination2.default, { page: this.state.page, type: 'event' }),
                         _react2.default.createElement(
@@ -14067,8 +14088,10 @@ var CouponList = function (_React$Component) {
 
         console.log('coupon construct', props);
         _this.state = {
-            items: []
+            items: [],
+            search: props.search
         };
+        console.log(props.search);
         return _this;
     }
 
@@ -14108,7 +14131,8 @@ var CouponList = function (_React$Component) {
                     method: 'LIST',
                     page: this.props.page,
                     items_on_page: 5,
-                    consumerId: consumerId
+                    consumerId: consumerId,
+                    search: props.search
                 }
             }).then(function (res) {
 
@@ -14241,7 +14265,8 @@ var CouponList = function (_React$Component) {
 
         _this.state = {
             items: [],
-            rule: ''
+            rule: '',
+            search: null
         };
 
         _this.showRulePopup = _this.showRulePopup.bind(_this);
@@ -14280,7 +14305,8 @@ var CouponList = function (_React$Component) {
                 params: {
                     method: 'LIST',
                     page: this.props.page,
-                    items_on_page: 5
+                    items_on_page: 5,
+                    search: props.search
                 }
             }).then(function (res) {
 
@@ -14374,7 +14400,7 @@ var CouponList = function (_React$Component) {
                                         _react2.default.createElement(
                                             'p',
                                             null,
-                                            item.event.coupon.totalQuantity
+                                            item.event.totalQuantity
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -14388,7 +14414,7 @@ var CouponList = function (_React$Component) {
                                         _react2.default.createElement(
                                             'p',
                                             null,
-                                            item.event.coupon.availableQuantity
+                                            item.event.availableQuantity
                                         )
                                     ),
                                     _react2.default.createElement(
@@ -29437,19 +29463,6 @@ var BodyEventDetail = function (_React$Component) {
             var config = new _Config2.default();
 
             if (this.state.data) {
-                var tab = _react2.default.createElement(_EventDetail2.default, { description: this.state.data.description });
-
-                if (this.state.tab == 'event_detail') {
-                    tab = _react2.default.createElement(_EventDetail2.default, { description: this.state.data.description });
-                }
-
-                if (this.state.tab == 'lower_price') {
-                    tab = _react2.default.createElement(_LowerPrice2.default, { sponsors: this.state.data.sponsors, id: this.state.id });
-                }
-
-                if (this.state.tab == 'record_price') {
-                    tab = _react2.default.createElement(_RecordPrice2.default, { bets: this.state.data.bets });
-                }
 
                 var user = JSON.parse(window.localStorage.getItem('user'));
 
@@ -29507,13 +29520,13 @@ var BodyEventDetail = function (_React$Component) {
                                             'span',
                                             null,
                                             'Total Quantity\uFF1A',
-                                            this.state.data.coupon.totalQuantity
+                                            this.state.data.totalQuantity
                                         ),
                                         _react2.default.createElement(
                                             'span',
                                             null,
                                             'Available Quantity\uFF1A',
-                                            this.state.data.coupon.availableQuantity
+                                            this.state.data.availableQuantity
                                         )
                                     )
                                 )
@@ -29527,83 +29540,13 @@ var BodyEventDetail = function (_React$Component) {
                                 { className: 'userBox' },
                                 _react2.default.createElement(
                                     'h3',
-                                    { className: 'top' },
-                                    _react2.default.createElement('img', { alt: '', src: user.headimgurl }),
-                                    user.nickname
+                                    { className: 'title' },
+                                    'Event Detail:'
                                 ),
                                 _react2.default.createElement(
                                     'p',
-                                    { className: 'c' },
-                                    'Current price\uFF1A',
-                                    _react2.default.createElement(
-                                        'span',
-                                        null,
-                                        '$',
-                                        this.state.data.bets[this.state.data.bets.length - 1].currentPrice
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'p',
-                                    { className: 'c' },
-                                    'Please help your friend to lower the price. First click below sponsor to lower the price. Then you can lower it by yourself.'
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'bargainSwitch' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'titles' },
-                                    _react2.default.createElement(
-                                        _reactRouterDom.Link,
-                                        { to: '/event/detail/' + this.state.id + '/event_detail' },
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'item ' + (this.state.tab == 'event_detail' ? 'on' : '') },
-                                            'Event Detail'
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        _reactRouterDom.Link,
-                                        { to: '/event/detail/' + this.state.id + '/lower_price' },
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'item ' + (this.state.tab == 'lower_price' ? 'on' : '') },
-                                            'Lower the price'
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        _reactRouterDom.Link,
-                                        { to: '/event/detail/' + this.state.id + '/record_price' },
-                                        _react2.default.createElement(
-                                            'span',
-                                            { className: 'item ' + (this.state.tab == 'record_price' ? 'on' : '') },
-                                            'Price Record'
-                                        )
-                                    )
-                                ),
-                                tab
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'bargainEvent' },
-                            _react2.default.createElement(
-                                'h3',
-                                null,
-                                'Lower the Price'
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                null,
-                                _react2.default.createElement(
-                                    'button',
-                                    { type: 'button', onClick: this.lowerConsumer },
-                                    'Lower'
+                                    { className: 'e-detail' },
+                                    this.state.data.description
                                 )
                             )
                         )
@@ -29731,12 +29674,53 @@ var Search = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 
         _this.state = {
-            type: 'event'
+            type: props.type,
+            searchValue: ''
         };
+        _this.updateSearchEventInputValue = _this.updateSearchEventInputValue.bind(_this);
+        _this.updateSearchCouponInputValue = _this.updateSearchCouponInputValue.bind(_this);
+        _this.searchEvent = _this.searchEvent.bind(_this);
+        console.log(props);
         return _this;
     }
 
     _createClass(Search, [{
+        key: 'searchEvent',
+        value: function searchEvent(search) {
+            this.props.changeSearch(search);
+        }
+    }, {
+        key: 'searchCoupon',
+        value: function searchCoupon() {
+            this.props.changeSearch(search);
+        }
+    }, {
+        key: 'updateSearchEventInputValue',
+        value: function updateSearchEventInputValue(e) {
+            var searchVal = $('.searchBox').find('input').val();
+
+            this.state = {
+                type: 'event',
+                searchValue: searchVal
+            };
+
+            this.searchEvent(searchVal);
+            console.log(this.state);
+        }
+    }, {
+        key: 'updateSearchCouponInputValue',
+        value: function updateSearchCouponInputValue(e) {
+            var searchVal = $('.searchBox').find('input').val();
+
+            this.state = {
+                type: 'coupon',
+                searchValue: searchVal
+            };
+
+            this.searchEvent(searchVal);
+            console.log(this.state);
+        }
+    }, {
         key: 'render',
         value: function render() {
 
@@ -29754,7 +29738,7 @@ var Search = function (_React$Component) {
                         { className: 'search-Btn' },
                         _react2.default.createElement(
                             'button',
-                            null,
+                            { type: 'button', onClick: this.updateSearchEventInputValue },
                             'Search'
                         )
                     )
@@ -29773,7 +29757,7 @@ var Search = function (_React$Component) {
                         { className: 'search-Btn' },
                         _react2.default.createElement(
                             'button',
-                            null,
+                            { type: 'button', onClick: this.updateSearchCouponInputValue },
                             'Search'
                         )
                     )

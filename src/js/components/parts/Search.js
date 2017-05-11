@@ -10,10 +10,46 @@ export default class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: 'event'
+            type: props.type,
+            searchValue: ''
         };
+        this.updateSearchEventInputValue = this.updateSearchEventInputValue.bind(this);
+        this.updateSearchCouponInputValue = this.updateSearchCouponInputValue.bind(this);
+        this.searchEvent = this.searchEvent.bind(this);
+        console.log(props);
     }
 
+    searchEvent(search){
+        this.props.changeSearch(search);
+    }
+
+    searchCoupon(){
+        this.props.changeSearch(search);
+    }
+
+    updateSearchEventInputValue(e) {
+        const searchVal = $('.searchBox').find('input').val();
+
+        this.state = {
+            type: 'event',
+            searchValue: searchVal
+        };
+
+        this.searchEvent(searchVal);
+        console.log(this.state);
+    }
+
+    updateSearchCouponInputValue(e) {
+        const searchVal = $('.searchBox').find('input').val();
+
+        this.state = {
+            type: 'coupon',
+            searchValue: searchVal
+        };
+
+        this.searchEvent(searchVal);
+        console.log(this.state);
+    }
 
     render(){
 
@@ -24,7 +60,7 @@ export default class Search extends React.Component {
                         <input type="text" placeholder="Search Event"/>
                     </div>
                     <div className="search-Btn">
-                        <button>Search</button>
+                        <button type="button" onClick={this.updateSearchEventInputValue}>Search</button>
                     </div>
                 </div>
             )
@@ -35,7 +71,7 @@ export default class Search extends React.Component {
                         <input type="text" placeholder="Search Coupon"/>
                     </div>
                     <div className="search-Btn">
-                        <button>Search</button>
+                        <button type="button" onClick={this.updateSearchCouponInputValue}>Search</button>
                     </div>
                 </div>
             )

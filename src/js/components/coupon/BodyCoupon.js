@@ -14,10 +14,13 @@ export default class BodyCoupon extends React.Component{
     constructor(props){
         super(props);
         console.log('coupon body construct', props.match.params.page);
+
         this.state = {
             items: [],
             page: props.match.params.page !== undefined ? props.match.params.page : 1
-        }
+        };
+
+        this.changeSearch = this.changeSearch.bind(this);
     }
 
     componentDidMount(props) {
@@ -29,8 +32,13 @@ export default class BodyCoupon extends React.Component{
 
         this.state = {
             items: [],
-            page: props.match.params.page !== undefined ? props.match.params.page : 1
+            page: props.match.params.page !== undefined ? props.match.params.page : 1,
+            search: null
         }
+    }
+
+    changeSearch(search) {
+        this.setState({search:search});
     }
 
     render(){
@@ -38,9 +46,9 @@ export default class BodyCoupon extends React.Component{
             <div>
                 <div>
                     <div className="main">
-                        <Search type="coupon"/>
+                        <Search type="coupon" changeSearch={this.changeSearch}/>
                         <div className="list list_coupon">
-                            <CouponList page={this.state.page} />
+                            <CouponList page={this.state.page} search={this.state.search}/>
                         </div>
                         <Pagination page={this.state.page} type="coupon" />
                         <div className="column">

@@ -14,7 +14,8 @@ export default class CouponList extends React.Component{
 
         this.state = {
             items: [],
-            rule: ''
+            rule: '',
+            search: null
         };
 
         this.showRulePopup = this.showRulePopup.bind(this);
@@ -45,7 +46,8 @@ export default class CouponList extends React.Component{
             params: {
                 method: 'LIST',
                 page: this.props.page,
-                items_on_page: 5
+                items_on_page: 5,
+                search: props.search
             }
         }).then(res => {
 
@@ -92,11 +94,11 @@ export default class CouponList extends React.Component{
                                 <div className="items">
                                     <div className="item">
                                         <p>Total</p>
-                                        <p>{item.event.coupon.totalQuantity }</p>
+                                        <p>{item.event.totalQuantity }</p>
                                     </div>
                                     <div className="item">
                                         <p>Available</p>
-                                        <p>{item.event.coupon.availableQuantity }</p>
+                                        <p>{item.event.availableQuantity }</p>
                                     </div>
                                     <div className="item clearfix">
                                         <div className="col-80 lh2">
