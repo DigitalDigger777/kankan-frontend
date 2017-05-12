@@ -44,7 +44,7 @@ export default class RedeemPopup extends React.Component {
                         <div className="modal-body">
                             This coupon will be marked as redeemed. You can't use it any more!
                         </div>
-                        <div className="modal-footer">
+                        <div className="modal-footer" >
                             <button type="button" className="default-btn" data-dismiss="modal">Go Back</button>
                             <button type="button" className="main-btn" onClick={this.imSure}>I'm Sure</button>
                         </div>

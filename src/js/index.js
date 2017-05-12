@@ -32,7 +32,7 @@ export default class Index extends React.Component{
             }).then( res => {
 
                 window.localStorage.setItem('user_id', res.data.id);
-                window.location = '/';
+                //window.location = '/';
             });
         }
 
