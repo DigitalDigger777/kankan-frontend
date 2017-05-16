@@ -12,6 +12,7 @@ import RecordPrice from './lowerPriceTabs/RecordPrice';
 import JoinPanel from './parts/JoinPanel';
 import JoinPopup from './parts/JoinPopup';
 import LowerPopup from './parts/LowerPopup';
+import LowerConsumerButton from './parts/LowerConsumerButton';
 
 export default class BodyEventDetailFriend extends React.Component{
     constructor(props) {
@@ -23,8 +24,6 @@ export default class BodyEventDetailFriend extends React.Component{
             tab: props.match.params.tab,
             data: null
         };
-
-        this.lowerConsumer = this.lowerConsumer.bind(this);
     }
 
     componentDidMount() {
@@ -47,8 +46,6 @@ export default class BodyEventDetailFriend extends React.Component{
                     isJoined: res.data.is_joined
                 });
             });
-
-
     }
 
     componentWillReceiveProps(props) {
@@ -58,19 +55,6 @@ export default class BodyEventDetailFriend extends React.Component{
             tab: props.match.params.tab,
             data: this.state.data
         };
-    }
-
-    lowerConsumer() {
-        const config = new Config();
-        const consumerId = window.localStorage.getItem('user_id');
-
-        axios.post(config.baseUrl + 'api/kankan/consumer/bet', {
-            eventId: this.state.id,
-            consumerId: consumerId
-        }).then(res => {
-            console.log(res);
-            $('#lowerPopup').modal('show');
-        });
     }
 
     render(){
@@ -108,8 +92,8 @@ export default class BodyEventDetailFriend extends React.Component{
                                 <ul>
                                     <li><span>Original Price：${ this.state.data.product.price }</span><span>Lowest Price：$0.00</span></li>
                                     <li>
-                                        <span>Total Quantity：{this.state.data.coupon.totalQuantity}</span>
-                                        <span>Available Quantity：{this.state.data.coupon.availableQuantity}</span>
+                                        <span>Total Quantity：{this.state.data.totalQuantity}</span>
+                                        <span>Available Quantity：{this.state.data.availableQuantity}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -125,19 +109,14 @@ export default class BodyEventDetailFriend extends React.Component{
                             <div className="bargainSwitch">
                                 <div className="titles">
                                     {/*<a href="kankan_home-friend_lower-event_detail__e.html"><span className="item on">Event Detail</span></a>*/}
-                                    <Link to={`/event/detail/${this.state.id}/event_detail`}><span className={`item ${this.state.tab == 'event_detail' ? 'on' : ''}`}>Event Detail</span></Link>
-                                    <Link to={`/event/detail/${this.state.id}/lower_price`}><span className={`item ${this.state.tab == 'lower_price' ? 'on' : ''}`}>Lower the price</span></Link>
-                                    <Link to={`/event/detail/${this.state.id}/record_price`}><span className={`item ${this.state.tab == 'record_price' ? 'on' : ''}`}>Price Record</span></Link>
+                                    <Link to={`/event/detail-friend/${this.state.id}/event_detail`}><span className={`item ${this.state.tab == 'event_detail' ? 'on' : ''}`}>Event Detail</span></Link>
+                                    <Link to={`/event/detail-friend/${this.state.id}/lower_price`}><span className={`item ${this.state.tab == 'lower_price' ? 'on' : ''}`}>Lower the price</span></Link>
+                                    <Link to={`/event/detail-friend/${this.state.id}/record_price`}><span className={`item ${this.state.tab == 'record_price' ? 'on' : ''}`}>Price Record</span></Link>
                                 </div>
                                 {tab}
                             </div>
                         </div>
-                        <div className="bargainEvent">
-                            <h3>Lower the Price</h3>
-                            <div>
-                                <button type="button" onClick={this.lowerConsumer}>Lower</button>
-                            </div>
-                        </div>
+                        <LowerConsumerButton id={this.state.id} />
                     </div>
                     <JoinPanel eventId={this.state.id} product={this.state.data.product}  isJoined={this.state.isJoined }/>
                 </div>

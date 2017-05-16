@@ -1,8 +1,4 @@
 /**
- * Created by korman on 08.05.17.
- */
-
-/**
  * Created by korman on 02.05.17.
  */
 
@@ -11,7 +7,7 @@ import React from 'react';
 import axios from 'axios';
 import HelpPanel from './HelpPanel';
 
-export default class JoinPanel extends React.Component{
+export default class LowerSponsorButton extends React.Component{
 
     constructor(props){
         super(props);

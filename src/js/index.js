@@ -9,10 +9,11 @@ import CouponDetail from './components/coupon/CouponDetail';
 import CouponRedeem from './components/coupon/CouponRedeem';
 import Login from './components/user/Login';
 
-// import BodyContact from './components/BodyContact';
+
 import { Router } from 'react-router';
 import { HashRouter,Route, hashHistory } from 'react-router-dom'
 import axios from 'axios';
+import BodyEventDetailFriend from './components/event/detail/BodyEventDetailFriend';
 
 export default class Index extends React.Component{
     constructor(){
@@ -21,8 +22,27 @@ export default class Index extends React.Component{
     render(){
 
         if (/\?user=([\w\W]+)/.exec(window.location.search)) {
-            var user = JSON.parse(decodeURIComponent(/\?user=([\w\W]+)/.exec(window.location.search)[1]));
+            let matchUserAndState = /\?user=([\w\W]+)\&state=([0-9:]+)/.exec(window.location.search);
+            let user = JSON.parse(decodeURIComponent(matchUserAndState[1]));
+            let state = matchUserAndState[2];
+            let eventId     = 0;
+            let consumerId  = 0;
+
+            if (state != 0) {
+                let splitState  = state.split(':');
+                eventId     = splitState[0];
+                consumerId  = splitState[1];
+                let friendEvent = JSON.stringify({
+                    eventId: eventId,
+                    consumerId: consumerId
+                });
+
+                window.localStorage.setItem('friendEvent', friendEvent);
+                // console.log(user, state, eventId, consumerId);
+            }
+
             window.localStorage.setItem('user', JSON.stringify(user));
+
 
             const config = new Config();
             axios.post(config.baseUrl + 'api/kankan/consumer', {
@@ -32,7 +52,15 @@ export default class Index extends React.Component{
             }).then( res => {
 
                 window.localStorage.setItem('user_id', res.data.id);
-                //window.location = '/';
+
+                if (state == 0) {
+                    window.location = '/';
+                } else {
+                    let config = new Config();
+                    let baseFrontUrl = config.baseFrontUrl;
+
+                    window.location.href = baseFrontUrl + '#/event/detail-friend/' + eventId + '/event_detail';
+                }
             });
         }
 
@@ -52,7 +80,9 @@ export default class Index extends React.Component{
                     <Route exact path="/" component={BodyEvent}></Route>
                     <Route exact path="/event/:page" component={BodyEvent}></Route>
                     <Route exact path="/coupon/:page" component={BodyCoupon}></Route>
-                    <Route path="/event/detail/:id/:tab" component={BodyEventDetail}></Route>
+                    <Route exact path="/event/detail/:id/:tab" component={BodyEventDetail}></Route>
+                    <Route exact path="/event/detail-friend/:id/:tab" component={BodyEventDetailFriend}></Route>
+
                     <Route path="/coupon/detail/:id" component={CouponDetail}></Route>
                     <Route exact path="/coupon/redeem/:id" component={CouponRedeem}></Route>
                     <Route exact path="/login" component={Login}></Route>
