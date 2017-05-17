@@ -24,10 +24,16 @@ export default class LowerSponsorButton extends React.Component{
     lowerSponsor(e) {
 
         const config = new Config();
+        const friendEventStore = JSON.parse(window.localStorage.getItem('friendEvent'));
+
+        const consumerFriendId  = window.localStorage.getItem('user_id');
+        const consumerId        = friendEventStore.consumerId;
 
         axios.post(config.baseUrl + 'api/kankan/consumer/bet', {
             eventId: this.state.id,
             sponsorId: this.state.sponsorId,
+            consumerId: consumerId,
+            consumerFriendId: consumerFriendId
         }).then(res => {
             console.log(res);
             $('#lowerPopup').modal('show');
