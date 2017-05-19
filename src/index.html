@@ -382,6 +382,9 @@
                 cancel: function () {
                     // Callback function executed after a user cancels sharing
                     console.log('sharing canser');
+                },
+                fail: function(res){
+                    console.log('sharing failed', res);
                 }
             });
         });
