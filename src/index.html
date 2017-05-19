@@ -359,7 +359,7 @@
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script>
         wx.config({
-            debug: true, // Enables debugging mode. Return values of all APIs called will be shown on the client. To view the sent parameters, open the log view of developer tools on a computer browser. The parameter information can only be printed when viewed from a computer.
+            debug: false, // Enables debugging mode. Return values of all APIs called will be shown on the client. To view the sent parameters, open the log view of developer tools on a computer browser. The parameter information can only be printed when viewed from a computer.
             appId: 'wxfca7a5406897fa7b', // Required, unique identifier of the official account
             timestamp: '1495205995', // Required, timestamp for the generated signature
             nonceStr: 'MCAgoDERmZmlaSqG', // Required, random string for the generated signature
@@ -373,6 +373,9 @@
                 console.log(res);
                 // Returned as key-value pairs, true for available API and false for unavailable API
                 // Example: {"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+            },
+            fail: function () {
+                console.log('fail checkt');
             }
         });
 
