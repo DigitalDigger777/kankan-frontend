@@ -71,7 +71,7 @@ export default class JoinPanel extends React.Component{
             )
         } else {
             return (
-                <HelpPanel/>
+                <HelpPanel eventId={this.state.eventId} />
             )
         }
     }
