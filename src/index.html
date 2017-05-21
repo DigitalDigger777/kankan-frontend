@@ -427,6 +427,10 @@
                                     alert('Sharing Canceled');
                                 },
                                 fail: function (res) {
+                                    res = {
+                                        res: res,
+                                        error: 'yes'
+                                    };
                                     alert(JSON.stringify(res));
                                 }
                             });
