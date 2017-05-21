@@ -401,6 +401,25 @@
                                     link: 'http://www.sciencemag.org/news/2017/05/chemists-may-be-zeroing-chemical-reactions-sparked-first-life', // Sharing link
                                     imgUrl: 'http://www.sciencemag.org/sites/default/files/styles/inline__699w__no_aspect/public/CT594A-HIRES_16x9.jpg?itok=08sctoOx', // Sharing image URL
                                     trigger: function (res) {
+                                        alert('"Share on Moments" is clicked');
+                                    },
+                                    success: function (res) {
+                                        alert('Sharing succeeds');
+                                    },
+                                    cancel: function (res) {
+                                        alert('Sharing Canceled');
+                                    },
+                                    fail: function (res) {
+                                        alert(JSON.stringify(res));
+                                    }
+                                });
+
+                                wx.onMenuShareAppMessage({
+                                    title: 'Chemists may', // Sharing title
+                                    desc: 'Chemists may be zeroing in on chemical reactions that sparked the first life',
+                                    link: 'http://www.sciencemag.org/news/2017/05/chemists-may-be-zeroing-chemical-reactions-sparked-first-life', // Sharing link
+                                    imgUrl: 'http://www.sciencemag.org/sites/default/files/styles/inline__699w__no_aspect/public/CT594A-HIRES_16x9.jpg?itok=08sctoOx', // Sharing image URL
+                                    trigger: function (res) {
                                         alert('"Send to Chat" is clicked');
                                     },
                                     success: function (res) {
