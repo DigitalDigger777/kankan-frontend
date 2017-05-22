@@ -23,7 +23,7 @@ export default class HelpPanel extends React.Component{
                     <a href={`http://kuaikan.ppcgclub.com/api/kankan/shopper/event/generate-qr?eventId=${this.state.eventId}:${this.state.userId}`}>
                         <img src="images/ico-1.png" alt="" />
                     </a>
-                    <a href="#">
+                    <a href={`weixin://dl/help`}>
                         <img src="images/ico-2.png" alt="" />
                     </a>
                 </div>
