@@ -428,6 +428,19 @@
             wx.ready(function(o){
                 if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
                     alert('have bridge');
+                    WeixinJSBridge.invoke('sendAppMessage',{
+                        'appid': data.appId, // 公众号appID
+                        'type': 'link', // 非必填，music,vido或link,默认为link。
+                        'data_url': '', // 非必填，连接地址,如音乐的mp3数据地址,供内置播放器使用
+                        'img_url': 'http://pnewsapp.tc.qq.com/newsapp_bt/0/9963967/640', // 缩略图地址
+                        'img_height':370, // 缩略图高度
+                        'img_width':550, // 缩略图宽度
+                        'link':'http://view.inews.qq.com/a/WXN2013101101385701', // 链接地址
+                        'desc':'desc', // 描述
+                        'title':'title' // 标题
+                    },function(res){
+                       alert(res.err_msg);
+                    });
                 } else {
                     alert('not have bridge');
                 }
