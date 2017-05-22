@@ -374,7 +374,38 @@
                             timestamp: data.timestamp, // Required, timestamp for the generated signature
                             nonceStr: data.nonceStr, // Required, random string for the generated signature
                             signature: data.signature, // Required, signature. See Appendix 1.
-                            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
+                            jsApiList: [
+                                'checkJsApi',
+                                'onMenuShareTimeline',
+                                'onMenuShareAppMessage',
+                                'hideMenuItems',
+                                'showMenuItems',
+                                'hideAllNonBaseMenuItem',
+                                'showAllNonBaseMenuItem',
+                                'translateVoice',
+                                'startRecord',
+                                'stopRecord',
+                                'onRecordEnd',
+                                'playVoice',
+                                'pauseVoice',
+                                'stopVoice',
+                                'uploadVoice',
+                                'downloadVoice',
+                                'chooseImage',
+                                'previewImage',
+                                'uploadImage',
+                                'downloadImage',
+                                'getNetworkType',
+                                'openLocation',
+                                'getLocation',
+                                'hideOptionMenu',
+                                'showOptionMenu',
+                                'closeWindow',
+                                'scanQRCode',
+                                'addCard',
+                                'chooseCard',
+                                'openCard'
+                            ] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
                         });
 
 
