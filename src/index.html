@@ -374,11 +374,6 @@
 </body>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
-    if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
-        alert('have bridge');
-    } else {
-        alert('not have bridge');
-    }
 
     $.ajax({
         url: 'http://kuaikan.ppcgclub.com/open-wechat/oa-new/signature',
@@ -431,6 +426,12 @@
 
 
             wx.ready(function(o){
+                if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+                    alert('have bridge');
+                } else {
+                    alert('not have bridge');
+                }
+
                 // The callback function of ready API will be executed after a successful config authentication, and each API calling must be done after the config API obtains a result. As config is an asynchronous operation, all relevant API calling must be put in the callback function if it needs to be called while the page loads. A user-initiated API call can be called directly without needing to be put in the callback function.
 //                alert('wechat api ready ' + JSON.stringify(o));
 //                            wx.checkJsApi({
