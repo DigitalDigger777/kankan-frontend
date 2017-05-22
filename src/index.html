@@ -379,9 +379,9 @@
 
 
 
-                        wx.ready(function(){
+                        wx.ready(function(o){
                             // The callback function of ready API will be executed after a successful config authentication, and each API calling must be done after the config API obtains a result. As config is an asynchronous operation, all relevant API calling must be put in the callback function if it needs to be called while the page loads. A user-initiated API call can be called directly without needing to be put in the callback function.
-                            console.log('wechat api ready');
+                            alert('wechat api ready ' + JSON.stringify(o));
 //                            wx.checkJsApi({
 //                                jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], // List of JS APIs to be checked. See Appendix 2 for the list of all JS APIs.
 //                                success: function (res) {
