@@ -473,6 +473,11 @@
                             alert(JSON.stringify(res));
                         }
                     });
+
+                    setTimeout(function () {
+                        alert('call share');
+                        wx.onMenuShareAppMessage();
+                    }, 3000)
                 }, 3000)
 
 
