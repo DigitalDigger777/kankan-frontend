@@ -458,6 +458,7 @@
                         dataUrl: '', // The data URL should be provided for items of type “music” or “video”. It is null by default.
                         trigger: function (res) {
                             alert('"Send to Chat" is clicked' + JSON.stringify(res));
+                            this.title = 'oooo';
                         },
                         success: function (res) {
                             alert('Sharing succeeds');
@@ -474,11 +475,11 @@
                         }
                     });
 
-                    setTimeout(function () {
-                        alert('call share');
-//                        wx.onMenuShareAppMessage();
-                        $(wx).trigger('onMenuShareAppMessage');
-                    }, 3000)
+//                    setTimeout(function () {
+//                        alert('call share');
+////                        wx.onMenuShareAppMessage();
+//                        $(wx).trigger('onMenuShareAppMessage');
+//                    }, 3000)
                 }, 3000)
 
 
