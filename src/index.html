@@ -464,6 +464,8 @@
                     desc: 'Share Description',
                     link: 'http://movie.douban.com/subject/25785114/',
                     imgUrl: 'http://kuaikan.ppcgclub.com/uploads/images/1.jpg',
+                    type: 'link', // Sharing type, such as “music”, “video “ or “link”. It is “link” by default.
+                    dataUrl: '', // The data URL should be provided for items of type “music” or “video”. It is null by default.
                     trigger: function (res) {
                         alert('"Send to Chat" is clicked' + JSON.stringify(res));
                     },
