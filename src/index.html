@@ -411,33 +411,31 @@
                     'scanQRCode',
                     'addCard',
                     'chooseCard',
-                    'openCard',
-                    'menuItem:share:appMessage',
-                    'sendAppMessage'
+                    'openCard'
                 ] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
             });
 
 
 
             wx.ready(function(o){
-                if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
-                    alert('have bridge');
-                    WeixinJSBridge.invoke('sendAppMessage',{
-                        'appid': data.appId, // 公众号appID
-                        'type': 'link', // 非必填，music,vido或link,默认为link。
-                        'data_url': '', // 非必填，连接地址,如音乐的mp3数据地址,供内置播放器使用
-                        'img_url': 'http://pnewsapp.tc.qq.com/newsapp_bt/0/9963967/640', // 缩略图地址
-                        'img_height':370, // 缩略图高度
-                        'img_width':550, // 缩略图宽度
-                        'link':'http://view.inews.qq.com/a/WXN2013101101385701', // 链接地址
-                        'desc':'desc', // 描述
-                        'title':'title' // 标题
-                    },function(res){
-                       alert(res.err_msg);
-                    });
-                } else {
-                    alert('not have bridge');
-                }
+//                if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+//                    alert('have bridge');
+//                    WeixinJSBridge.invoke('sendAppMessage',{
+//                        'appid': data.appId, // 公众号appID
+//                        'type': 'link', // 非必填，music,vido或link,默认为link。
+//                        'data_url': '', // 非必填，连接地址,如音乐的mp3数据地址,供内置播放器使用
+//                        'img_url': 'http://pnewsapp.tc.qq.com/newsapp_bt/0/9963967/640', // 缩略图地址
+//                        'img_height':370, // 缩略图高度
+//                        'img_width':550, // 缩略图宽度
+//                        'link':'http://view.inews.qq.com/a/WXN2013101101385701', // 链接地址
+//                        'desc':'desc', // 描述
+//                        'title':'title' // 标题
+//                    },function(res){
+//                       alert(res.err_msg);
+//                    });
+//                } else {
+//                    alert('not have bridge');
+//                }
 
                 // The callback function of ready API will be executed after a successful config authentication, and each API calling must be done after the config API obtains a result. As config is an asynchronous operation, all relevant API calling must be put in the callback function if it needs to be called while the page loads. A user-initiated API call can be called directly without needing to be put in the callback function.
 //                alert('wechat api ready ' + JSON.stringify(o));
