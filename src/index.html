@@ -361,154 +361,86 @@
 </head>
 <body>
 <!--<a href="#" id="link">link</a>-->
-<!--<div id="mainContainer"></div>-->
-<!--<script src="bundle.js"></script>-->
-<a id="choseImage" href="#">chose image</a>
-<a id="shareMessage" href="#">Share message</a>
+<div id="mainContainer"></div>
+<script src="bundle.js"></script>
+<!--<a id="choseImage" href="#">chose image</a>-->
+<!--<a id="shareMessage" href="#">Share message</a>-->
 </body>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script>
+<!--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>-->
+<!--<script>-->
 
-    $.ajax({
-        url: 'http://kuaikan.ppcgclub.com/open-wechat/oa-new/signature',
-        data: {
-            url: window.location.href.split('#')[0]
-        },
-        success: function (data) {
-            console.log(data);
+    <!--$.ajax({-->
+        <!--url: 'http://kuaikan.ppcgclub.com/open-wechat/oa-new/signature',-->
+        <!--data: {-->
+            <!--url: window.location.href.split('#')[0]-->
+        <!--},-->
+        <!--success: function (data) {-->
+            <!--console.log(data);-->
 
-            wx.config({
-                debug: false, // Enables debugging mode. Return values of all APIs called will be shown on the client. To view the sent parameters, open the log view of developer tools on a computer browser. The parameter information can only be printed when viewed from a computer.
-                appId: data.appId, // Required, unique identifier of the official account
-                timestamp: data.timestamp, // Required, timestamp for the generated signature
-                nonceStr: data.nonceStr, // Required, random string for the generated signature
-                signature: data.signature, // Required, signature. See Appendix 1.
-                jsApiList: [
-                    'checkJsApi',
-                    'onMenuShareTimeline',
-                    'onMenuShareAppMessage',
-                    'hideMenuItems',
-                    'showMenuItems',
-                    'hideAllNonBaseMenuItem',
-                    'showAllNonBaseMenuItem',
-                    'translateVoice',
-                    'startRecord',
-                    'stopRecord',
-                    'onRecordEnd',
-                    'playVoice',
-                    'pauseVoice',
-                    'stopVoice',
-                    'uploadVoice',
-                    'downloadVoice',
-                    'chooseImage',
-                    'previewImage',
-                    'uploadImage',
-                    'downloadImage',
-                    'getNetworkType',
-                    'openLocation',
-                    'getLocation',
-                    'hideOptionMenu',
-                    'showOptionMenu',
-                    'closeWindow',
-                    'scanQRCode',
-                    'addCard',
-                    'chooseCard',
-                    'openCard'
-                ] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
-            });
+            <!--wx.config({-->
+                <!--debug: false, // Enables debugging mode. Return values of all APIs called will be shown on the client. To view the sent parameters, open the log view of developer tools on a computer browser. The parameter information can only be printed when viewed from a computer.-->
+                <!--appId: data.appId, // Required, unique identifier of the official account-->
+                <!--timestamp: data.timestamp, // Required, timestamp for the generated signature-->
+                <!--nonceStr: data.nonceStr, // Required, random string for the generated signature-->
+                <!--signature: data.signature, // Required, signature. See Appendix 1.-->
+                <!--jsApiList: [-->
+                    <!--'checkJsApi',-->
+                    <!--'onMenuShareTimeline',-->
+                    <!--'onMenuShareAppMessage'-->
+                <!--] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs-->
+            <!--});-->
 
 
 
-            wx.ready(function(o){
+            <!--wx.ready(function(o){-->
 
-                wx.checkJsApi({
-                    jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], // List of JS APIs to be checked. See Appendix 2 for the list of all JS APIs.
-                    success: function (res) {
-                        alert(JSON.stringify(res));
-                        // Returned as key-value pairs, true for available API and false for unavailable API
-                        // Example: {"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
-                    },
-                    fail: function () {
-                        console.log('fail checkt');
-                    }
-                });
+                <!--wx.checkJsApi({-->
+                    <!--jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], // List of JS APIs to be checked. See Appendix 2 for the list of all JS APIs.-->
+                    <!--success: function (res) {-->
+                        <!--alert(JSON.stringify(res));-->
+                        <!--// Returned as key-value pairs, true for available API and false for unavailable API-->
+                        <!--// Example: {"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}-->
+                    <!--},-->
+                    <!--fail: function () {-->
+                        <!--console.log('fail checkt');-->
+                    <!--}-->
+                <!--});-->
 
-                $('#choseImage').click(function(){
-                    wx.chooseImage({
-                        success: function (res) {
-                            var localIds = res.localIds; // Local ID list of selected images. localIds can be used as the src attribute of the img tag to display images.
-                            alert(localIds);
-                        }
-                    });
-                });
+                <!--$('#choseImage').click(function(){-->
+                    <!--wx.chooseImage({-->
+                        <!--success: function (res) {-->
+                            <!--var localIds = res.localIds; // Local ID list of selected images. localIds can be used as the src attribute of the img tag to display images.-->
+                            <!--alert(localIds);-->
+                        <!--}-->
+                    <!--});-->
+                <!--});-->
 
-                $('#shareMessage').click(function (e) {
-                    e.preventDefault();
-                    alert('join event');
-                    wx.onMenuShareAppMessage({
-                        title: 'Share Title',
-                        desc: 'Share Description',
-                        link: 'http://movie.douban.com/subject/25785114/',
-                        imgUrl: 'http://kuaikan.ppcgclub.com/uploads/images/1.jpg',
-                        type: 'link', // Sharing type, such as “music”, “video “ or “link”. It is “link” by default.
-                        dataUrl: '', // The data URL should be provided for items of type “music” or “video”. It is null by default.
-                        trigger: function (res) {
-                            alert('"Send to Chat" is clicked' + JSON.stringify(res));
-                            //this.title = 'oooo';
-                        },
-                        success: function (res) {
-                            alert('Sharing succeeds');
-                        },
-                        cancel: function (res) {
-                            alert('Sharing Canceled');
-                        },
-                        fail: function (res) {
-                            res = {
-                                res: res,
-                                error: 'yes'
-                            };
-                            alert(JSON.stringify(res));
-                        }
-                    });
-                });
-                setTimeout(function () {
-//                    alert('join');
+                <!--wx.onMenuShareTimeline({-->
+                    <!--title: 'Chemists may be zeroing in on chemical reactions that sparked the first life', // Sharing title-->
+                    <!--link: 'http://www.sciencemag.org/news/2017/05/chemists-may-be-zeroing-chemical-reactions-sparked-first-life', // Sharing link-->
+                    <!--imgUrl: 'http://www.sciencemag.org/sites/default/files/styles/inline__699w__no_aspect/public/CT594A-HIRES_16x9.jpg?itok=08sctoOx', // Sharing image URL-->
+                    <!--trigger: function (res) {-->
+                        <!--alert('"Share on Moments" is clicked' + JSON.stringify(res));-->
+                    <!--},-->
+                    <!--success: function (res) {-->
+                        <!--alert('Sharing succeeds');-->
+                    <!--},-->
+                    <!--cancel: function (res) {-->
+                        <!--alert('Sharing Canceled');-->
+                    <!--},-->
+                    <!--fail: function (res) {-->
+                        <!--alert(JSON.stringify(res));-->
+                    <!--}-->
+                <!--});-->
 
+            <!--});-->
 
-//                    setTimeout(function () {
-//                        alert('call share');
-////                        wx.onMenuShareAppMessage();
-//                        $(wx).trigger('onMenuShareAppMessage');
-//                    }, 3000)
-                }, 5000)
+            <!--wx.error(function(res){-->
 
-
-                wx.onMenuShareTimeline({
-                    title: 'Chemists may be zeroing in on chemical reactions that sparked the first life', // Sharing title
-                    link: 'http://www.sciencemag.org/news/2017/05/chemists-may-be-zeroing-chemical-reactions-sparked-first-life', // Sharing link
-                    imgUrl: 'http://www.sciencemag.org/sites/default/files/styles/inline__699w__no_aspect/public/CT594A-HIRES_16x9.jpg?itok=08sctoOx', // Sharing image URL
-                    trigger: function (res) {
-                        alert('"Share on Moments" is clicked' + JSON.stringify(res));
-                    },
-                    success: function (res) {
-                        alert('Sharing succeeds');
-                    },
-                    cancel: function (res) {
-                        alert('Sharing Canceled');
-                    },
-                    fail: function (res) {
-                        alert(JSON.stringify(res));
-                    }
-                });
-
-            });
-
-            wx.error(function(res){
-
-                // The callback function of error API will be executed if config authentication fails. If authentication failure is due to an expired signature, the detailed error information can be viewed by enabling the debugging mode within config API, or via the returned res parameter. The signature can be updated here for the SPA.
-                console.log('wechat api error', res);
-            });
-        }
-    });
-</script>
+                <!--// The callback function of error API will be executed if config authentication fails. If authentication failure is due to an expired signature, the detailed error information can be viewed by enabling the debugging mode within config API, or via the returned res parameter. The signature can be updated here for the SPA.-->
+                <!--console.log('wechat api error', res);-->
+            <!--});-->
+        <!--}-->
+    <!--});-->
+<!--</script>-->
 </html>
