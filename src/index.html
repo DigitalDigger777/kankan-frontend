@@ -442,13 +442,9 @@
                     });
                 });
 
-//                $('#shareMessage').click(function (e) {
-//                    e.preventDefault();
-//                    alert('join event');
-//
-//                });
-                setTimeout(function () {
-                    alert('join');
+                $('#shareMessage').click(function (e) {
+                    e.preventDefault();
+                    alert('join event');
                     wx.onMenuShareAppMessage({
                         title: 'Share Title',
                         desc: 'Share Description',
@@ -474,6 +470,10 @@
                             alert(JSON.stringify(res));
                         }
                     });
+                });
+                setTimeout(function () {
+//                    alert('join');
+
 
 //                    setTimeout(function () {
 //                        alert('call share');
