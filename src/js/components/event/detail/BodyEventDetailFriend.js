@@ -90,7 +90,7 @@ export default class BodyEventDetailFriend extends React.Component{
                         alert(JSON.stringify(res));
                     }
                 });
-            }, 2000);
+            }, 5000);
 
 
         });
