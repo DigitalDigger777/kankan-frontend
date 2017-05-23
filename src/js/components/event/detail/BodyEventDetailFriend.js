@@ -72,13 +72,15 @@ export default class BodyEventDetailFriend extends React.Component{
             });
 
             setTimeout(function(){
-                alert('share event');
-                
+                alert('share event 1');
+
                 wx.onMenuShareAppMessage({
                     title: 'Share Title',
                     desc: 'Share Description',
                     link: 'http://movie.douban.com/subject/25785114/',
                     imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+                    type: 'link',
+                    dataUrl: '',
                     trigger: function (res) {
                         alert('"Send to Chat" is clicked');
                     },
