@@ -476,7 +476,8 @@
 
                     setTimeout(function () {
                         alert('call share');
-                        wx.onMenuShareAppMessage();
+//                        wx.onMenuShareAppMessage();
+                        $(wx).trigger('onMenuShareAppMessage');
                     }, 3000)
                 }, 3000)
 
