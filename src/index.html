@@ -442,33 +442,34 @@
                     });
                 });
 
-                $('#shareMessage').click(function (e) {
-                    e.preventDefault();
-                    alert('join event');
-                    wx.onMenuShareAppMessage({
-                        title: 'Share Title',
-                        desc: 'Share Description',
-                        link: 'http://movie.douban.com/subject/25785114/',
-                        imgUrl: 'http://kuaikan.ppcgclub.com/uploads/images/1.jpg',
-                        type: 'link', // Sharing type, such as “music”, “video “ or “link”. It is “link” by default.
-                        dataUrl: '', // The data URL should be provided for items of type “music” or “video”. It is null by default.
-                        trigger: function (res) {
-                            alert('"Send to Chat" is clicked' + JSON.stringify(res));
-                        },
-                        success: function (res) {
-                            alert('Sharing succeeds');
-                        },
-                        cancel: function (res) {
-                            alert('Sharing Canceled');
-                        },
-                        fail: function (res) {
-                            res = {
-                                res: res,
-                                error: 'yes'
-                            };
-                            alert(JSON.stringify(res));
-                        }
-                    });
+//                $('#shareMessage').click(function (e) {
+//                    e.preventDefault();
+//                    alert('join event');
+//
+//                });
+                wx.onMenuShareAppMessage({
+                    title: 'Share Title',
+                    desc: 'Share Description',
+                    link: 'http://movie.douban.com/subject/25785114/',
+                    imgUrl: 'http://kuaikan.ppcgclub.com/uploads/images/1.jpg',
+                    type: 'link', // Sharing type, such as “music”, “video “ or “link”. It is “link” by default.
+                    dataUrl: '', // The data URL should be provided for items of type “music” or “video”. It is null by default.
+                    trigger: function (res) {
+                        alert('"Send to Chat" is clicked' + JSON.stringify(res));
+                    },
+                    success: function (res) {
+                        alert('Sharing succeeds');
+                    },
+                    cancel: function (res) {
+                        alert('Sharing Canceled');
+                    },
+                    fail: function (res) {
+                        res = {
+                            res: res,
+                            error: 'yes'
+                        };
+                        alert(JSON.stringify(res));
+                    }
                 });
 
                 wx.onMenuShareTimeline({
