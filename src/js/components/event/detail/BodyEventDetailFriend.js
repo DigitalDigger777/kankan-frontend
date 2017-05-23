@@ -72,6 +72,8 @@ export default class BodyEventDetailFriend extends React.Component{
             });
 
             setTimeout(function(){
+                alert('share event');
+                
                 wx.onMenuShareAppMessage({
                     title: 'Share Title',
                     desc: 'Share Description',
