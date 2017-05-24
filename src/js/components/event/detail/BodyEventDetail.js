@@ -28,6 +28,9 @@ export default class BodyEventDetail extends React.Component{
         this.lowerConsumer = this.lowerConsumer.bind(this);
     }
 
+    updateState(state){
+        this.state = state;
+    }
     componentDidMount() {
         const config = new Config();
         const consumerId = window.localStorage.getItem('user_id');
@@ -50,6 +53,7 @@ export default class BodyEventDetail extends React.Component{
 
                     const eventId = this.state.id;
                     const state = this.state;
+                    const self = this;
                     //let wx = new jweixin();
 
                     wx.config({
@@ -65,8 +69,10 @@ export default class BodyEventDetail extends React.Component{
                         ] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
                     });
 
+
                     wx.ready(function(){
                         setTimeout(() => {
+
                             state.canShare = true;
                             wx.onMenuShareAppMessage({
                                 title: state.data.product.name,
@@ -88,7 +94,7 @@ export default class BodyEventDetail extends React.Component{
                                     alert(JSON.stringify(res));
                                 }
                             });
-
+                            self.updateState(state);
                         }, 1000);
                     });
                 });
