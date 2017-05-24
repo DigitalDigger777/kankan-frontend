@@ -21,7 +21,8 @@ export default class BodyEventDetail extends React.Component{
         this.state = {
             id: props.match.params.id,
             tab: props.match.params.tab,
-            data: null
+            data: null,
+            canShare: false
         };
 
         this.lowerConsumer = this.lowerConsumer.bind(this);
@@ -38,6 +39,59 @@ export default class BodyEventDetail extends React.Component{
                 // const countPages = res.data.count_pages;
                 this.setState({ data });
 
+
+                //prepare share
+                axios.get(config.baseUrl + 'open-wechat/oa-new/signature', {
+                    params: {
+                        url: window.location.href.split('#')[0]
+                    }
+                }).then(res => {
+                    // alert('get signature');
+
+                    const eventId = this.state.id;
+                    const state = this.state;
+                    //let wx = new jweixin();
+
+                    wx.config({
+                        debug: false, // Enables debugging mode. Return values of all APIs called will be shown on the client. To view the sent parameters, open the log view of developer tools on a computer browser. The parameter information can only be printed when viewed from a computer.
+                        appId: res.data.appId, // Required, unique identifier of the official account
+                        timestamp: res.data.timestamp, // Required, timestamp for the generated signature
+                        nonceStr: res.data.nonceStr, // Required, random string for the generated signature
+                        signature: res.data.signature, // Required, signature. See Appendix 1.
+                        jsApiList: [
+                            'checkJsApi',
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage'
+                        ] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
+                    });
+
+                    wx.ready(function(){
+                        setTimeout(() => {
+                            state.canShare = true;
+                            wx.onMenuShareAppMessage({
+                                title: state.data.product.name,
+                                desc: state.data.description,
+                                link: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfca7a5406897fa7b&redirect_uri=http://kuaikan.ppcgclub.com/kankan/consumer/login&response_type=code&scope=snsapi_login&state=' + eventId + '#wechat_redirect',
+                                imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+                                type: 'link',
+                                dataUrl: '',
+                                trigger: function (res) {
+                                    //alert('"Send to Chat" is clicked');
+                                },
+                                success: function (res) {
+                                    //alert('Sharing succeeds');
+                                },
+                                cancel: function (res) {
+                                    //alert('Sharing Canceled');
+                                },
+                                fail: function (res) {
+                                    alert(JSON.stringify(res));
+                                }
+                            });
+
+                        }, 1000);
+                    });
+                });
             });
 
         axios.get(config.baseUrl + 'api/kankan/shopper/event/is-joined?eventId=' + this.state.id + '&consumerId=' + consumerId)
@@ -48,59 +102,7 @@ export default class BodyEventDetail extends React.Component{
                 });
             });
 
-        axios.get(config.baseUrl + 'open-wechat/oa-new/signature', {
-            params: {
-                url: window.location.href.split('#')[0]
-            }
-        }).then(res => {
-            alert('get signature');
 
-            const eventId = this.state.id;
-            //let wx = new jweixin();
-
-            wx.config({
-                debug: false, // Enables debugging mode. Return values of all APIs called will be shown on the client. To view the sent parameters, open the log view of developer tools on a computer browser. The parameter information can only be printed when viewed from a computer.
-                appId: res.data.appId, // Required, unique identifier of the official account
-                timestamp: res.data.timestamp, // Required, timestamp for the generated signature
-                nonceStr: res.data.nonceStr, // Required, random string for the generated signature
-                signature: res.data.signature, // Required, signature. See Appendix 1.
-                jsApiList: [
-                    'checkJsApi',
-                    'onMenuShareTimeline',
-                    'onMenuShareAppMessage'
-                ] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
-            });
-
-            wx.ready(function(){
-                setTimeout(function(){
-                    alert('share event 1');
-
-                    wx.onMenuShareAppMessage({
-                        title: 'Share Title',
-                        desc: 'Share Description',
-                        link: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfca7a5406897fa7b&redirect_uri=http://kuaikan.ppcgclub.com/kankan/consumer/login&response_type=code&scope=snsapi_login&state=' + eventId + '#wechat_redirect',
-                        imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
-                        type: 'link',
-                        dataUrl: '',
-                        trigger: function (res) {
-                            alert('"Send to Chat" is clicked');
-                        },
-                        success: function (res) {
-                            alert('Sharing succeeds');
-                        },
-                        cancel: function (res) {
-                            alert('Sharing Canceled');
-                        },
-                        fail: function (res) {
-                            alert(JSON.stringify(res));
-                        }
-                    });
-
-                }, 1000);
-            });
-
-
-        });
     }
 
     componentWillReceiveProps(props) {
