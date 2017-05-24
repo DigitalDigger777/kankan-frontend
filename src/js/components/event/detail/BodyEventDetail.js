@@ -94,7 +94,7 @@ export default class BodyEventDetail extends React.Component{
                                     alert(JSON.stringify(res));
                                 }
                             });
-                            alert(JSON.stringify(state));
+
                             self.updateState(state);
                         }, 1000);
                     });
@@ -117,7 +117,8 @@ export default class BodyEventDetail extends React.Component{
         this.state = {
             id: props.match.params.id,
             tab: props.match.params.tab,
-            data: this.state.data
+            data: this.state.data,
+            canShare: this.state.canShare
         };
     }
 
