@@ -28,9 +28,6 @@ export default class BodyEventDetail extends React.Component{
         this.lowerConsumer = this.lowerConsumer.bind(this);
     }
 
-    updateState(state){
-        this.state = state;
-    }
 
     componentDidMount() {
         const config = new Config();
@@ -121,9 +118,6 @@ export default class BodyEventDetail extends React.Component{
             data: this.state.data,
             canShare: this.state.canShare
         };
-    }
-    componentWillUpdate(){
-        alert(JSON.stringify(this.state));
     }
 
     lowerConsumer() {
