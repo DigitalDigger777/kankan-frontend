@@ -123,7 +123,7 @@ export default class BodyEventDetail extends React.Component{
         };
     }
     componentWillUpdate(){
-        alert('');
+        alert(JSON.stringify(this.state));
     }
 
     lowerConsumer() {
