@@ -75,7 +75,7 @@ export default class BodyEventDetail extends React.Component{
                             wx.onMenuShareAppMessage({
                                 title: state.data.product.name,
                                 desc: state.data.description,
-                                link: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfca7a5406897fa7b&redirect_uri=http://kuaikan.ppcgclub.com/kankan/consumer/login&response_type=code&scope=snsapi_login&state=' + eventId + '#wechat_redirect',
+                                link: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfca7a5406897fa7b&redirect_uri=http://kuaikan.ppcgclub.com/kankan/consumer/login&response_type=code&scope=snsapi_login&state=' + eventId + ':' + consumerId + '#wechat_redirect',
                                 imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
                                 type: 'link',
                                 dataUrl: '',
