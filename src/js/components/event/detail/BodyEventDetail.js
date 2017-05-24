@@ -78,7 +78,7 @@ export default class BodyEventDetail extends React.Component{
                     wx.onMenuShareAppMessage({
                         title: 'Share Title',
                         desc: 'Share Description',
-                        link: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfca7a5406897fa7b&redirect_uri=http://kuaikan.ppcgclub.com/kankan/consumer/login&response_type=code&scope=snsapi_login&state=' + eventId + '#wechat_redirect',
+                        link: 'http://kuaikan-frontend.ppcgclub.com/#/event/detail-friend/' + eventId + '/event_detail',
                         imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
                         type: 'link',
                         dataUrl: '',
@@ -96,7 +96,7 @@ export default class BodyEventDetail extends React.Component{
                         }
                     });
 
-                }, 3000);
+                }, 1000);
             });
 
 
