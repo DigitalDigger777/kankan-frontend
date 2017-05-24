@@ -53,7 +53,7 @@ export default class BodyEventDetail extends React.Component{
                 url: window.location.href.split('#')[0]
             }
         }).then(res => {
-            console.log(res.data);
+            alert('get signature');
 
             //let wx = new jweixin();
 
