@@ -47,12 +47,18 @@ export default class LowerConsumerButton extends React.Component{
         const consumerFriendId  = window.localStorage.getItem('user_id');
         const consumerId        = friendEventStore.consumerId;
 
+        alert(JSON.stringify({
+            eventId: this.state.id,
+            consumerId: consumerId,
+            consumerFriendId: consumerFriendId
+        }));
+
         axios.post(config.baseUrl + 'api/kankan/consumer/bet', {
             eventId: this.state.id,
             consumerId: consumerId,
             consumerFriendId: consumerFriendId
         }).then(res => {
-            alert(JSON.stringify(res));
+
             $('#lowerPopup').modal('show');
 
             axios.get(config.baseUrl + 'api/kankan/shopper/event/is-lower', {
