@@ -31,6 +31,7 @@ export default class BodyEventDetail extends React.Component{
     updateState(state){
         this.state = state;
     }
+
     componentDidMount() {
         const config = new Config();
         const consumerId = window.localStorage.getItem('user_id');
@@ -120,7 +121,9 @@ export default class BodyEventDetail extends React.Component{
             data: this.state.data,
             canShare: this.state.canShare
         };
-        alert(JSON.stringify(this.state));
+    }
+    componentWillUpdate(){
+        alert('');
     }
 
     lowerConsumer() {
