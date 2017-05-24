@@ -15,7 +15,7 @@ export default class LowerConsumerButton extends React.Component{
             id: props.id,
             isLower: false
         };
-        alert('construector');
+        //alert('constructor');
         this.lowerConsumer = this.lowerConsumer.bind(this);
     }
 
@@ -66,6 +66,8 @@ export default class LowerConsumerButton extends React.Component{
                 let isLower = res.data.is_lower;
                 this.setState({isLower:isLower});
             });
+        }).catch(error => {
+            alert(JSON.stringify(error));
         });
     }
 
