@@ -40,7 +40,7 @@ export default class LowerConsumerButton extends React.Component{
     }
 
     lowerConsumer() {
-
+        alert('click');
         const config = new Config();
         const friendEventStore = JSON.parse(window.localStorage.getItem('friendEvent'));
 
@@ -52,7 +52,7 @@ export default class LowerConsumerButton extends React.Component{
             consumerId: consumerId,
             consumerFriendId: consumerFriendId
         }).then(res => {
-            console.log(res);
+            alert(JSON.stringify(res));
             $('#lowerPopup').modal('show');
 
             axios.get(config.baseUrl + 'api/kankan/shopper/event/is-lower', {
