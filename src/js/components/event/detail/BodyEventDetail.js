@@ -70,30 +70,34 @@ export default class BodyEventDetail extends React.Component{
                 ] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
             });
 
-            setTimeout(function(){
-                alert('share event 1');
+            wx.ready(function(){
+                setTimeout(function(){
+                    alert('share event 1');
 
-                wx.onMenuShareAppMessage({
-                    title: 'Share Title',
-                    desc: 'Share Description',
-                    link: 'http://movie.douban.com/subject/25785114/',
-                    imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
-                    type: 'link',
-                    dataUrl: '',
-                    trigger: function (res) {
-                        alert('"Send to Chat" is clicked');
-                    },
-                    success: function (res) {
-                        alert('Sharing succeeds');
-                    },
-                    cancel: function (res) {
-                        alert('Sharing Canceled');
-                    },
-                    fail: function (res) {
-                        alert(JSON.stringify(res));
-                    }
-                });
-            }, 5000);
+                    wx.onMenuShareAppMessage({
+                        title: 'Share Title',
+                        desc: 'Share Description',
+                        link: 'http://movie.douban.com/subject/25785114/',
+                        imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
+                        type: 'link',
+                        dataUrl: '',
+                        trigger: function (res) {
+                            alert('"Send to Chat" is clicked');
+                        },
+                        success: function (res) {
+                            alert('Sharing succeeds');
+                        },
+                        cancel: function (res) {
+                            alert('Sharing Canceled');
+                        },
+                        fail: function (res) {
+                            alert(JSON.stringify(res));
+                        }
+                    });
+
+                }, 2000);
+            });
+
 
         });
     }
