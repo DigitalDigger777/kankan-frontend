@@ -96,7 +96,7 @@ export default class BodyEventDetail extends React.Component{
                                 }
                             });
 
-                            self.updateState(state);
+                            self.setState({canShare: true});
                         }, 1000);
                     });
                 });
