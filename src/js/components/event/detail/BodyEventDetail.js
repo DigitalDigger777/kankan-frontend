@@ -55,6 +55,7 @@ export default class BodyEventDetail extends React.Component{
         }).then(res => {
             alert('get signature');
 
+            const eventId = this.state.id;
             //let wx = new jweixin();
 
             wx.config({
@@ -77,7 +78,7 @@ export default class BodyEventDetail extends React.Component{
                     wx.onMenuShareAppMessage({
                         title: 'Share Title',
                         desc: 'Share Description',
-                        link: 'http://movie.douban.com/subject/25785114/',
+                        link: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfca7a5406897fa7b&redirect_uri=http://kuaikan.ppcgclub.com/kankan/consumer/login&response_type=code&scope=snsapi_login&state=' + eventId + '#wechat_redirect',
                         imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
                         type: 'link',
                         dataUrl: '',
@@ -95,7 +96,7 @@ export default class BodyEventDetail extends React.Component{
                         }
                     });
 
-                }, 2000);
+                }, 1000);
             });
 
 
