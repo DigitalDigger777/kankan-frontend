@@ -130,7 +130,7 @@ export default class BodyEventDetail extends React.Component{
     render(){
         const config = new Config();
 
-        if (this.state.data) {
+        if (this.state.canShare) {
 
 
             const user = JSON.parse(window.localStorage.getItem('user'));
