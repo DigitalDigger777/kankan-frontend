@@ -96,7 +96,7 @@ export default class BodyEventDetail extends React.Component{
                         }
                     });
 
-                }, 1000);
+                }, 3000);
             });
 
 
