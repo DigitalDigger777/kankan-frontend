@@ -120,6 +120,7 @@ export default class BodyEventDetail extends React.Component{
             data: this.state.data,
             canShare: this.state.canShare
         };
+        alert(JSON.stringify(this.state));
     }
 
     lowerConsumer() {
