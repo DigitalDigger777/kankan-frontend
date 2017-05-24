@@ -48,56 +48,6 @@ export default class BodyEventDetailFriend extends React.Component{
                     isJoined: res.data.is_joined
                 });
             });
-
-        axios.get(config.baseUrl + 'open-wechat/oa-new/signature', {
-            params: {
-                url: window.location.href.split('#')[0]
-            }
-        }).then(res => {
-            console.log(res.data);
-
-            //let wx = new jweixin();
-
-            wx.config({
-                debug: false, // Enables debugging mode. Return values of all APIs called will be shown on the client. To view the sent parameters, open the log view of developer tools on a computer browser. The parameter information can only be printed when viewed from a computer.
-                appId: res.data.appId, // Required, unique identifier of the official account
-                timestamp: res.data.timestamp, // Required, timestamp for the generated signature
-                nonceStr: res.data.nonceStr, // Required, random string for the generated signature
-                signature: res.data.signature, // Required, signature. See Appendix 1.
-                jsApiList: [
-                    'checkJsApi',
-                    'onMenuShareTimeline',
-                    'onMenuShareAppMessage'
-                ] // Required, list of JS APIs to be used. See Appendix 2 for the list of all JS APIs
-            });
-
-            setTimeout(function(){
-                alert('share event 1');
-
-                wx.onMenuShareAppMessage({
-                    title: 'Share Title',
-                    desc: 'Share Description',
-                    link: 'http://movie.douban.com/subject/25785114/',
-                    imgUrl: 'http://img3.douban.com/view/movie_poster_cover/spst/public/p2166127561.jpg',
-                    type: 'link',
-                    dataUrl: '',
-                    trigger: function (res) {
-                        alert('"Send to Chat" is clicked');
-                    },
-                    success: function (res) {
-                        alert('Sharing succeeds');
-                    },
-                    cancel: function (res) {
-                        alert('Sharing Canceled');
-                    },
-                    fail: function (res) {
-                        alert(JSON.stringify(res));
-                    }
-                });
-            }, 5000);
-
-
-        });
     }
 
     componentWillReceiveProps(props) {
